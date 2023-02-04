@@ -17,6 +17,21 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return MaterialApp(
+      title: 'New app',
+      home: Scaffold(
+        appBar: AppBar(
+          title: Text('Kp New app'),
+        ),
+        body: const SafeArea(
+          child: Center(
+            child: Text(
+              'This is Google Fonts',
+
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

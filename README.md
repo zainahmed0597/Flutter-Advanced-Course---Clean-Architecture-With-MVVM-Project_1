@@ -1,4 +1,4 @@
-# project_1
+# Flutter-Advanced-Course_Clean-Architecture-With-MVVM
 
 A new Flutter project.
 
