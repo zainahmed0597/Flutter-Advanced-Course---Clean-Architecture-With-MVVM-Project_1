@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:project_1/presentation/color_manager.dart';
-import 'package:project_1/presentation/font_manager.dart';
-import 'package:project_1/presentation/styles_manager.dart';
-import 'package:project_1/presentation/values_manager.dart';
+import 'package:project_1/presentation/resources/color_manager.dart';
+import 'package:project_1/presentation/resources/font_manager.dart';
+import 'package:project_1/presentation/resources/styles_manager.dart';
+import 'package:project_1/presentation/resources/values_manager.dart';
+
 
 ThemeData getApplicationTheme() {
   return ThemeData(
     // Main color of the app
     primaryColor: ColorManager.primary,
-    primaryColorDark: ColorManager.dartPrimary,
+    primaryColorDark: ColorManager.darkPrimary,
     primaryColorLight: ColorManager.primaryOpacity70,
     disabledColor: ColorManager.grey1,
     // will be used in case of disable button for example
@@ -101,7 +102,6 @@ ThemeData getApplicationTheme() {
         borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s12),
         borderRadius: BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
-
     ),
   );
 }
