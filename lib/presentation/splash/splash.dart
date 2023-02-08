@@ -22,6 +22,16 @@ class _SplashViewState extends State<SplashView> {
   _goNext(){
     Navigator.pushReplacementNamed(context,Routes.onBoardingRoute);
   }
+  @override
+  void initState() {
+    super.initState();
+    _startDelay();
+  }
+  @override
+  void dispose() {
+    super.dispose();
+    _timer?.cancel();
+  }
 
   @override
   Widget build(BuildContext context) {
