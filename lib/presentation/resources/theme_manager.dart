@@ -37,7 +37,7 @@ ThemeData getApplicationTheme() {
 
     // Button theme
     buttonTheme: ButtonThemeData(
-      shape: StadiumBorder(),
+      shape: const StadiumBorder(),
       disabledColor: ColorManager.grey1,
       buttonColor: ColorManager.primary,
       splashColor: ColorManager.primaryOpacity70,
@@ -55,14 +55,18 @@ ThemeData getApplicationTheme() {
 
     // Text theme
     textTheme: TextTheme(
-      headline1: getSemiBoldStyle(
+      displayLarge: getSemiBoldStyle(
           color: ColorManager.darkGrey, fontSize: FontSize.s16),
-      subtitle1: getMediumStyle(
+      titleMedium: getMediumStyle(
         color: ColorManager.lightGrey,
         fontSize: FontSize.s14,
       ),
-      caption: getRegularStyle(color: ColorManager.grey1),
-      bodyText1: getRegularStyle(color: ColorManager.grey1),
+      titleSmall: getMediumStyle(
+        color: ColorManager.primary,
+        fontSize: FontSize.s14,
+      ),
+      bodySmall: getRegularStyle(color: ColorManager.grey1),
+      bodyLarge: getRegularStyle(color: ColorManager.grey1),
     ),
 
     // Input decoration theme (text form field)
@@ -81,26 +85,26 @@ ThemeData getApplicationTheme() {
       // enabled border
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s12),
-        borderRadius: BorderRadius.all(Radius.circular(AppSize.s8)),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
 
       // focus border
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s12),
-        borderRadius: BorderRadius.all(Radius.circular(AppSize.s8)),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
         // focus border
       ),
 
       // error border
       errorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.error, width: AppSize.s12),
-        borderRadius: BorderRadius.all(Radius.circular(AppSize.s8)),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
 
       // focus error border
       focusedErrorBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s12),
-        borderRadius: BorderRadius.all(Radius.circular(AppSize.s8)),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
     ),
   );
