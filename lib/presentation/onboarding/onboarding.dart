@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:project_1/presentation/onboarding/onbording_viewmodel.dart';
 import 'package:project_1/presentation/resources/assets_manager.dart';
 import 'package:project_1/presentation/resources/color_manager.dart';
 import 'package:project_1/presentation/resources/strings_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../domain/model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -14,24 +17,37 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-  late final List<SliderObject> _list = _getSliderData();
-  final PageController _pageController = PageController(initialPage: 0);
-  int _currentIndex = 0;
 
-  List<SliderObject> _getSliderData() => [
-        SliderObject(AppStrings.onBoardingTitle1,
-            AppStrings.onBoardingSubTitle1, ImageAssets.onBoardingLogo1),
-        SliderObject(AppStrings.onBoardingTitle2,
-            AppStrings.onBoardingSubTitle2, ImageAssets.onBoardingLogo2),
-        SliderObject(AppStrings.onBoardingTitle3,
-            AppStrings.onBoardingSubTitle3, ImageAssets.onBoardingLogo3),
-        SliderObject(AppStrings.onBoardingTitle4,
-            AppStrings.onBoardingSubTitle4, ImageAssets.onBoardingLogo4)
-      ];
+  PageController _pageController = PageController(initialPage: 0);
+
+  OnBoardingViewModel _viewModel = OnBoardingViewModel();
+
+  _bine(){
+    _viewModel.start();
+  }
+
+  @override
+  void initState() {
+    _bine();
+    super.initState();
+  }
+
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return StreamBuilder<SliderViewObject>(
+      stream: _viewModel.outputSliderViewObject,
+      builder: (context, snapShot){
+        return _getContentWidet(snapShot.data);
+      }
+    );
+  }
+
+  Widget _getContentWidet(SliderViewObject? sliderViewObject){
+      if (sliderViewObject == null){
+        return Container();
+      } else {
+        return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
@@ -44,14 +60,12 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       ),
       body: PageView.builder(
           controller: _pageController,
-          itemCount: _list.length,
+          itemCount: sliderViewObject.numOfSlides,
           onPageChanged: (index) {
-            setState(() {
-              _currentIndex = index;
-            });
+            _viewModel.onPageChanged(index);
           },
           itemBuilder: (context, index) {
-            return OnBoardingPage(_list[index]);
+            return OnBoardingPage(sliderViewObject.sliderObject);
           }),
       bottomSheet: Container(
         color: ColorManager.white,
@@ -70,14 +84,15 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   ),
                 )),
             // add layout for indicator and arrows
-            _getBottomSheetWidget()
+            _getBottomSheetWidget(sliderViewObject)
           ],
         ),
       ),
     );
+      }
   }
 
-  Widget _getBottomSheetWidget() {
+  Widget _getBottomSheetWidget(SliderViewObject sliderViewObject ) {
     return Container(
       color: ColorManager.primary,
       child: Row(
@@ -97,7 +112,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               ),
               onTap: () {
                 // go to previous slide
-                _pageController.animateToPage(_getPreviousIndex(),
+                _pageController.animateToPage(_viewModel.goPrevious(),
                     duration:
                         const Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
@@ -108,10 +123,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           // circles indicator
           Row(
             children: [
-              for (int i = 0; i < _list.length; i++)
+              for (int i = 0; i < sliderViewObject.numOfSlides; i++)
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p8),
-                  child: _getProperCircle(i),
+                  child: _getProperCircle(i,sliderViewObject.currentIndex),
                 ),
             ],
           ),
@@ -131,7 +146,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               ),
               onTap: () {
                 // go to next slide
-                _pageController.animateToPage(_getNextIndex(),
+                _pageController.animateToPage(_viewModel.goNext(),
                     duration:
                         const Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
@@ -143,29 +158,17 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  int _getPreviousIndex() {
-    int previousIndex = _currentIndex--; // -1
-    if (previousIndex == -1) {
-      _currentIndex =
-          _list.length - 1; // infinite loop to go to length of slider list
-    }
-    return _currentIndex;
-  }
-
-  int _getNextIndex() {
-    int nextIndex = _currentIndex++; // +1
-    if (nextIndex >= _list.length) {
-      _currentIndex = 0; // infinite loop to go first item the slider
-    }
-    return _currentIndex;
-  }
-
-  Widget _getProperCircle(int index) {
+  Widget _getProperCircle(int index, int _currentIndex) {
     if (index == _currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc); // selected slider
     } else {
       return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
     }
+  }
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 }
 
@@ -206,10 +209,3 @@ class OnBoardingPage extends StatelessWidget {
   }
 }
 
-class SliderObject {
-  String title;
-  String subTitle;
-  String image;
-
-  SliderObject(this.title, this.subTitle, this.image);
-}
