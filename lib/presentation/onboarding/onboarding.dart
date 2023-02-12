@@ -18,9 +18,9 @@ class OnBoardingView extends StatefulWidget {
 
 class _OnBoardingViewState extends State<OnBoardingView> {
 
-  PageController _pageController = PageController(initialPage: 0);
+  final PageController _pageController = PageController(initialPage: 0);
 
-  OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
   _bine(){
     _viewModel.start();
@@ -158,8 +158,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index, int _currentIndex) {
-    if (index == _currentIndex) {
+  Widget _getProperCircle(int index, int currentIndex) {
+    if (index == currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc); // selected slider
     } else {
       return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
