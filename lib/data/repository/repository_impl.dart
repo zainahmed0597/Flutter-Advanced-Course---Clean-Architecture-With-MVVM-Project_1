@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:project_1/data/mapper/mapper.dart';
+import 'package:project_1/data/network/error_handler.dart';
 import 'package:project_1/data/network/failure.dart';
 import 'package:project_1/data/request/request.dart';
 import 'package:project_1/domain/model.dart';
@@ -17,20 +18,26 @@ class RepositoryImpl extends Repository {
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
-      // it's save to call the API
-      final response = await _remoteDataSource.login(loginRequest);
-      if (response.status == 0) // success
-      {
-        // return data (success), return right "Authentication"
-        return Right(response.toDomain());
-      } else {
-        // return biz logic error, return left Failure
-        return Left(Failure(
-            409, response.massage ?? "we have biz error logic from API side"));
+      try {
+        // it's save to call the API
+        final response = await _remoteDataSource.login(loginRequest);
+        if (response.status == ApiInternalStatus.SUCCESS) // success
+        {
+          // return data (success), return right "Authentication"
+          return Right(response.toDomain());
+        } else {
+          // return biz logic error, return left Failure
+          return Left(Failure(
+            response.status ?? ApiInternalStatus.FAILURE,
+            response.massage ?? ResponseMessage.DEFAULT,
+          ));
+        }
+      } catch (error) {
+        return (Left(ErrorHandler.handle(error).failure));
       }
     } else {
       // return connection error
-      return Left(Failure(501, "Please check your internet connection"));
+      return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
 }
