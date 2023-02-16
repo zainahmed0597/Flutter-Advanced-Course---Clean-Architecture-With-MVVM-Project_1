@@ -3,8 +3,8 @@ import 'package:project_1/data/mapper/mapper.dart';
 import 'package:project_1/data/network/error_handler.dart';
 import 'package:project_1/data/network/failure.dart';
 import 'package:project_1/data/request/request.dart';
-import 'package:project_1/domain/model.dart';
-import '../../domain/repository.dart';
+import 'package:project_1/domain/model/model.dart';
+import '../../domain/repository/repository.dart';
 import '../data_source/remote_data_source.dart';
 import '../network/network_info.dart';
 

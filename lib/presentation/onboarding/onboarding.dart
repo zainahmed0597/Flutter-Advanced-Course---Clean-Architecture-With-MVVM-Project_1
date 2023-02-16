@@ -7,7 +7,7 @@ import 'package:project_1/presentation/resources/strings_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -71,7 +71,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         color: ColorManager.white,
         height: AppSize.s100,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,// to remove bottom white space
+          // mainAxisAlignment: MainAxisAlignment.end,// to remove bottom white space
           children: [
             Align(
                 alignment: Alignment.centerRight,

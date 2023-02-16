@@ -1,6 +1,6 @@
 import 'package:project_1/app/extensions.dart';
 import 'package:project_1/data/responses/responses.dart';
-import 'package:project_1/domain/model.dart';
+import 'package:project_1/domain/model/model.dart';
 
 
 const EMPTY = "";
