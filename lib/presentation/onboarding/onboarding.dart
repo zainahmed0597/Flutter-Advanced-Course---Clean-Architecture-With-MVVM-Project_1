@@ -8,6 +8,7 @@ import 'package:project_1/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../domain/model/model.dart';
+import '../resources/routes_manager.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
 
-  _bine(){
+  _bine() {
     _viewModel.start();
   }
 
@@ -36,63 +37,69 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<SliderViewObject>(
-      stream: _viewModel.outputSliderViewObject,
-      builder: (context, snapShot){
-        return _getContentWidet(snapShot.data);
-      }
+        stream: _viewModel.outputSliderViewObject,
+        builder: (context, snapShot) {
+          return _getContentWidet(snapShot.data);
+        }
     );
   }
 
-  Widget _getContentWidet(SliderViewObject? sliderViewObject){
-      if (sliderViewObject == null){
-        return Container();
-      } else {
-        return Scaffold(
-      backgroundColor: ColorManager.white,
-      appBar: AppBar(
+  Widget _getContentWidet(SliderViewObject? sliderViewObject) {
+    if (sliderViewObject == null) {
+      return Container();
+    } else {
+      return Scaffold(
         backgroundColor: ColorManager.white,
-        elevation: AppSize.s0,
-        systemOverlayStyle: SystemUiOverlayStyle(
-          statusBarColor: ColorManager.white,
-          statusBarBrightness: Brightness.dark,
-          statusBarIconBrightness: Brightness.dark,
+        appBar: AppBar(
+          backgroundColor: ColorManager.white,
+          elevation: AppSize.s0,
+          systemOverlayStyle: SystemUiOverlayStyle(
+            statusBarColor: ColorManager.white,
+            statusBarBrightness: Brightness.dark,
+            statusBarIconBrightness: Brightness.dark,
+          ),
         ),
-      ),
-      body: PageView.builder(
-          controller: _pageController,
-          itemCount: sliderViewObject.numOfSlides,
-          onPageChanged: (index) {
-            _viewModel.onPageChanged(index);
-          },
-          itemBuilder: (context, index) {
-            return OnBoardingPage(sliderViewObject.sliderObject);
-          }),
-      bottomSheet: Container(
-        color: ColorManager.white,
-        height: AppSize.s100,
-        child: Column(
-          // mainAxisAlignment: MainAxisAlignment.end,// to remove bottom white space
-          children: [
-            Align(
-                alignment: Alignment.centerRight,
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    AppStrings.skip,
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                )),
-            // add layout for indicator and arrows
-            _getBottomSheetWidget(sliderViewObject)
-          ],
+        body: PageView.builder(
+            controller: _pageController,
+            itemCount: sliderViewObject.numOfSlides,
+            onPageChanged: (index) {
+              _viewModel.onPageChanged(index);
+            },
+            itemBuilder: (context, index) {
+              return OnBoardingPage(sliderViewObject.sliderObject);
+            }),
+        bottomSheet: Container(
+          color: ColorManager.white,
+          height: AppSize.s100,
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.end,// to remove bottom white space
+            children: [
+              Align(
+                  alignment: Alignment.centerRight,
+                  child: TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacementNamed(
+                          context, Routes.loginRoute);
+                    },
+                    child: Text(
+                      AppStrings.skip,
+                      textAlign: TextAlign.end,
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleSmall,
+                    ),
+                  )),
+              // add layout for indicator and arrows
+              _getBottomSheetWidget(sliderViewObject)
+            ],
+          ),
         ),
-      ),
-    );
-      }
+      );
+    }
   }
 
-  Widget _getBottomSheetWidget(SliderViewObject sliderViewObject ) {
+  Widget _getBottomSheetWidget(SliderViewObject sliderViewObject) {
     return Container(
       color: ColorManager.primary,
       child: Row(
@@ -114,7 +121,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 // go to previous slide
                 _pageController.animateToPage(_viewModel.goPrevious(),
                     duration:
-                        const Duration(milliseconds: DurationConstant.d300),
+                    const Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
               },
             ),
@@ -126,7 +133,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               for (int i = 0; i < sliderViewObject.numOfSlides; i++)
                 Padding(
                   padding: const EdgeInsets.all(AppPadding.p8),
-                  child: _getProperCircle(i,sliderViewObject.currentIndex),
+                  child: _getProperCircle(i, sliderViewObject.currentIndex),
                 ),
             ],
           ),
@@ -148,7 +155,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                 // go to next slide
                 _pageController.animateToPage(_viewModel.goNext(),
                     duration:
-                        const Duration(milliseconds: DurationConstant.d300),
+                    const Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
               },
             ),
@@ -165,6 +172,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
     }
   }
+
   @override
   void dispose() {
     _viewModel.dispose();
@@ -188,7 +196,10 @@ class OnBoardingPage extends StatelessWidget {
           child: Text(
             _sliderObject.title,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.displayLarge,
+            style: Theme
+                .of(context)
+                .textTheme
+                .displayLarge,
           ),
         ),
         Padding(
@@ -196,7 +207,10 @@ class OnBoardingPage extends StatelessWidget {
           child: Text(
             _sliderObject.subTitle,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.titleMedium,
+            style: Theme
+                .of(context)
+                .textTheme
+                .titleMedium,
           ),
         ),
         const SizedBox(
