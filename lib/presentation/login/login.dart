@@ -41,9 +41,9 @@ class _LoginViewState extends State<LoginView> {
 
   Widget _getContentWidget() {
     return Scaffold(
+      backgroundColor: ColorManager.white,
       body: Container(
         padding: EdgeInsets.only(top: AppPadding.p100),
-        color: ColorManager.white,
         child: SingleChildScrollView(
           child: Form(
             key: _formKey,
@@ -97,13 +97,16 @@ class _LoginViewState extends State<LoginView> {
                   child: StreamBuilder<bool>(
                     stream: _viewModel.outputIsAllInputsValid,
                     builder: (context, snapshot) {
-                      return ElevatedButton(
-                        onPressed: (snapshot.data ?? false)
-                            ? () {
-                                _viewModel.login();
-                              }
-                            : null,
-                        child: Text(AppStrings.login),
+                      return SizedBox(
+                        width: double.infinity,
+                        height: AppSize.s40,
+                        child: ElevatedButton(
+                            onPressed: (snapshot.data ?? false)
+                                ? () {
+                                    _viewModel.login();
+                                  }
+                                : null,
+                            child: Text(AppStrings.login)),
                       );
                     },
                   ),
