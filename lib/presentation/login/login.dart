@@ -5,6 +5,8 @@ import 'package:project_1/presentation/resources/color_manager.dart';
 import 'package:project_1/presentation/resources/strings_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
 
+import '../resources/routes_manager.dart';
+
 class LoginView extends StatefulWidget {
   const LoginView({Key? key}) : super(key: key);
 
@@ -61,6 +63,50 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.emailAddress,
                         controller: _userNameController,
                         decoration: InputDecoration(
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.error, width: AppSize.s1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.primary,
+                                  width: AppSize.s1),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.primary,
+                                  width: AppSize.s1),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.error, width: AppSize.s1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.grey, width: AppSize.s1),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.grey, width: AppSize.s1),
+                            ),
                             hintText: AppStrings.username,
                             labelText: AppStrings.username,
                             errorText: (snapshot.data ?? true)
@@ -81,6 +127,50 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
                         decoration: InputDecoration(
+                            errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.error, width: AppSize.s1),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.primary,
+                                  width: AppSize.s1),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.primary,
+                                  width: AppSize.s1),
+                            ),
+                            disabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.error, width: AppSize.s1),
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.grey, width: AppSize.s1),
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(AppSize.s12),
+                              ),
+                              borderSide: BorderSide(
+                                  color: ColorManager.grey, width: AppSize.s1),
+                            ),
                             hintText: AppStrings.password,
                             labelText: AppStrings.password,
                             errorText: (snapshot.data ?? true)
@@ -109,6 +199,40 @@ class _LoginViewState extends State<LoginView> {
                             child: Text(AppStrings.login)),
                       );
                     },
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: AppPadding.p8,
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.forgetPasswordRoute);
+                        },
+                        child: Text(
+                          AppStrings.forgetPassword,
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                              context, Routes.registerRoute);
+                        },
+                        child: Text(
+                          AppStrings.register,
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],

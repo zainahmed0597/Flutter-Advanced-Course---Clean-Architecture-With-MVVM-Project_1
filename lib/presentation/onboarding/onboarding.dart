@@ -89,7 +89,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                           .textTheme
                           .titleSmall,
                     ),
-                  )),
+                  ),),
               // add layout for indicator and arrows
               _getBottomSheetWidget(sliderViewObject)
             ],
