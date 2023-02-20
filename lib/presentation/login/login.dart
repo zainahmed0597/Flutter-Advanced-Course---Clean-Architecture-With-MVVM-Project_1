@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_1/app/di.dart';
 import 'package:project_1/presentation/login/login_viewmodel.dart';
 import 'package:project_1/presentation/resources/assets_manager.dart';
 import 'package:project_1/presentation/resources/color_manager.dart';
@@ -15,8 +16,7 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel =
-      LoginViewModel(null); // todo pass here login useCase
+  LoginViewModel _viewModel = instance<LoginViewModel>();
 
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -39,6 +39,12 @@ class _LoginViewState extends State<LoginView> {
   @override
   Widget build(BuildContext context) {
     return _getContentWidget();
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
   }
 
   Widget _getContentWidget() {
@@ -241,11 +247,5 @@ class _LoginViewState extends State<LoginView> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    _viewModel.dispose();
-    super.dispose();
   }
 }
