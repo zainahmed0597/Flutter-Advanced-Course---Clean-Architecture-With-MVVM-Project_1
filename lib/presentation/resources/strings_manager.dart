@@ -19,4 +19,5 @@ class AppStrings{
   static const String register = 'Not a member ? Sign up';
   static const String loading = 'loading...';
   static const String retry_again = 'Retry Again';
+  static const String ok = 'Ok';
 }
