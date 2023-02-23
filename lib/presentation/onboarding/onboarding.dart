@@ -6,7 +6,8 @@ import 'package:project_1/presentation/resources/color_manager.dart';
 import 'package:project_1/presentation/resources/strings_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import '../../app/app_prefs.dart';
+import '../../app/di.dart';
 import '../../domain/model/model.dart';
 import '../resources/routes_manager.dart';
 
@@ -22,8 +23,11 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   final PageController _pageController = PageController(initialPage: 0);
 
   final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  AppPreferences _appPreferences = instance<AppPreferences>();
+
 
   _bine() {
+    _appPreferences.setOnBoardingScreenViewed();
     _viewModel.start();
   }
 

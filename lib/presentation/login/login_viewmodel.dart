@@ -9,11 +9,14 @@ import '../common/freezed_data_classes.dart';
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInputs, LoginViewModelOutput {
   StreamController _userNameStreamController =
-      StreamController<String>.broadcast();
+  StreamController<String>.broadcast();
   StreamController _passwordStreamController =
-      StreamController<String>.broadcast();
+  StreamController<String>.broadcast();
   StreamController _isAllInputsValidStreamController =
-      StreamController<void>.broadcast();
+  StreamController<void>.broadcast();
+  StreamController isUserLoggedInSuccessFullyStreamController = StreamController<
+      bool>();
+
 
   var loginObject = LoginObject("", "");
 
@@ -27,6 +30,7 @@ class LoginViewModel extends BaseViewModel
     _userNameStreamController.close();
     _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
+    isUserLoggedInSuccessFullyStreamController.close();
   }
 
   @override
@@ -49,18 +53,20 @@ class LoginViewModel extends BaseViewModel
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
-            LoginUseCaseInput(loginObject.userName, loginObject.password)))
+        LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
-            (failure) => {
-                  // left -> failure
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                },
-            (data) => {
-                  // right -> success (data)
-                  inputState.add(ContentState())
-              // navigate to main screen after the login
-                });
+            (failure) =>
+        {
+          // left -> failure
+          inputState.add(ErrorState(
+              StateRendererType.POPUP_ERROR_STATE, failure.message))
+        },
+            (data) {
+          // right -> success (data)
+          inputState.add(ContentState());
+          // navigate to main screen after the login
+          isUserLoggedInSuccessFullyStreamController.add(true);
+        });
   }
 
   @override
@@ -81,12 +87,14 @@ class LoginViewModel extends BaseViewModel
 
   // outputs
   @override
-  Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
-      .map((password) => _isPasswordValid(password));
+  Stream<bool> get outputIsPasswordValid =>
+      _passwordStreamController.stream
+          .map((password) => _isPasswordValid(password));
 
   @override
-  Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
-      .map((userName) => _isUserNameValid(userName));
+  Stream<bool> get outputIsUserNameValid =>
+      _userNameStreamController.stream
+          .map((userName) => _isUserNameValid(userName));
 
   @override
   Stream<bool> get outputIsAllInputsValid =>
