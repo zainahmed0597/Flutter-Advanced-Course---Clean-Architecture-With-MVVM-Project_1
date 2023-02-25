@@ -8,12 +8,12 @@ part of 'responses.dart';
 
 BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) => BaseResponse()
   ..status = json['status'] as int?
-  ..massage = json['massage'] as String?;
+  ..message = json['massage'] as String?;
 
 Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
-      'massage': instance.massage,
+      'massage': instance.message,
     };
 
 CustomerResponse _$CustomerResponseFromJson(Map<String, dynamic> json) =>
@@ -55,13 +55,29 @@ AuthenticationResponse _$AuthenticationResponseFromJson(
           : ContactsResponse.fromJson(json['contacts'] as Map<String, dynamic>),
     )
       ..status = json['status'] as int?
-      ..massage = json['massage'] as String?;
+      ..message = json['massage'] as String?;
 
 Map<String, dynamic> _$AuthenticationResponseToJson(
         AuthenticationResponse instance) =>
     <String, dynamic>{
       'status': instance.status,
-      'massage': instance.massage,
+      'massage': instance.message,
       'customer': instance.customer,
       'contacts': instance.contacts,
+    };
+
+ForgotPasswordResponse _$ForgotPasswordResponseFromJson(
+        Map<String, dynamic> json) =>
+    ForgotPasswordResponse(
+      json['support'] as String?,
+    )
+      ..status = json['status'] as int?
+      ..message = json['massage'] as String?;
+
+Map<String, dynamic> _$ForgotPasswordResponseToJson(
+        ForgotPasswordResponse instance) =>
+    <String, dynamic>{
+      'status': instance.status,
+      'massage': instance.message,
+      'support': instance.support,
     };

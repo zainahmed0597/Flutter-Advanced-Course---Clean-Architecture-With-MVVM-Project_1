@@ -10,6 +10,8 @@ import 'package:project_1/domain/usecase/login_usecase.dart';
 import 'package:project_1/presentation/login/login_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/network/network_info.dart';
+import '../domain/usecase/forget_password_usecase.dart';
+import '../presentation/forget_password/forget_password_viewmodel.dart';
 
 final instance = GetIt.instance;
 
@@ -41,5 +43,14 @@ initLoginModule() {
   if (!GetIt.I.isRegistered<LoginUseCase>()) {
     instance.registerFactory<LoginUseCase>(() => LoginUseCase(instance()));
     instance.registerFactory<LoginViewModel>(() => LoginViewModel(instance()));
+  }
+}
+
+initForgotPasswordModule() {
+  if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
+    instance.registerFactory<ForgotPasswordUseCase>(
+            () => ForgotPasswordUseCase(instance()));
+    instance.registerFactory<ForgotPasswordViewModel>(
+            () => ForgotPasswordViewModel(instance()));
   }
 }

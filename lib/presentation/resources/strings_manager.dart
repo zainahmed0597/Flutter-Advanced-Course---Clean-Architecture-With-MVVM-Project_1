@@ -20,4 +20,8 @@ class AppStrings{
   static const String loading = 'loading...';
   static const String retry_again = 'Retry Again';
   static const String ok = 'Ok';
+  static const String resend_email = "Didn't receive email? Resend";
+  static const String emailHint = 'Email';
+  static const String invalidEmail = "Invalid Email";
+  static const String resetPassword = "Reset Password";
 }
