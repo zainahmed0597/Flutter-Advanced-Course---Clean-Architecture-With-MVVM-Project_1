@@ -1,5 +1,13 @@
+
+
+import 'dart:io';
+
+import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_1/app/di.dart';
+import 'package:project_1/data/mapper/mapper.dart';
 import 'package:project_1/presentation/register/register_viewmodel.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
@@ -17,11 +25,15 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterViewModel _viewModel = instance<RegisterViewModel>();
+  ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _userNameTextEditingController = TextEditingController();
-  TextEditingController _mobileNumberTextEditingController = TextEditingController();
-  TextEditingController _userEmailEditingController = TextEditingController();
-  TextEditingController _PasswordTextEditingController = TextEditingController();
+  TextEditingController _userNameTextEditingController =
+  TextEditingController();
+  TextEditingController _mobileNumberTextEditingController =
+  TextEditingController();
+  TextEditingController _emailEditingController = TextEditingController();
+  TextEditingController _PasswordTextEditingController =
+  TextEditingController();
 
   @override
   void initState() {
@@ -31,10 +43,18 @@ class _RegisterViewState extends State<RegisterView> {
 
   _bind() {
     _viewModel.start();
-    _userNameTextEditingController.addListener(() {_viewModel.setUserName(_userNameTextEditingController.text);});
-    _mobileNumberTextEditingController.addListener(() {_viewModel.setMobileNumber(_mobileNumberTextEditingController.text);});
-    _userEmailEditingController.addListener(() {_viewModel.setEmail(_userEmailEditingController.text);});
-    _PasswordTextEditingController.addListener(() {_viewModel.setPassword(_PasswordTextEditingController.text);});
+    _userNameTextEditingController.addListener(() {
+      _viewModel.setUserName(_userNameTextEditingController.text);
+    });
+    _mobileNumberTextEditingController.addListener(() {
+      _viewModel.setMobileNumber(_mobileNumberTextEditingController.text);
+    });
+    _emailEditingController.addListener(() {
+      _viewModel.setEmail(_emailEditingController.text);
+    });
+    _PasswordTextEditingController.addListener(() {
+      _viewModel.setPassword(_PasswordTextEditingController.text);
+    });
   }
 
   @override
@@ -49,9 +69,7 @@ class _RegisterViewState extends State<RegisterView> {
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         elevation: AppSize.s0,
-        iconTheme: IconThemeData(
-          color: ColorManager.primary
-        ),
+        iconTheme: IconThemeData(color: ColorManager.primary),
         backgroundColor: ColorManager.white,
       ),
       body: StreamBuilder<FlowState>(
@@ -69,151 +87,246 @@ class _RegisterViewState extends State<RegisterView> {
     );
   }
 
-Widget _getContentWidget() {
-  return Container(
-    // padding: EdgeInsets.only(top: AppPadding.p8),
-    child: SingleChildScrollView(
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: [
-            Image(image: AssetImage(ImageAssets.splashLogo)),
-            SizedBox(height: AppSize.s28),
-            // Name TextEditField
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppPadding.p28, right: AppPadding.p28),
-              child: StreamBuilder<String?>(
-                stream: _viewModel.outputErrorUserName,
-                builder: (context, snapshot) {
-                  return TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: _userNameTextEditingController,
-                    decoration: InputDecoration(
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+  Widget _getContentWidget() {
+    return Container(
+      padding: EdgeInsets.only(top: AppPadding.p60),
+      child: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: [
+              Image(image: AssetImage(ImageAssets.splashLogo)),
+
+              SizedBox(height: AppSize.s28),
+              // Name TextEditField
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorUserName,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.text,
+                      controller: _userNameTextEditingController,
+                      decoration: InputDecoration(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.error, width: AppSize.s1),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.primary, width: AppSize.s1),
-                        ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.primary, width: AppSize.s1),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.error, width: AppSize.s1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.grey, width: AppSize.s1),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
                           ),
-                          borderSide: BorderSide(
-                              color: ColorManager.grey, width: AppSize.s1),
-                        ),
-                        hintText: AppStrings.name,
-                        labelText: AppStrings.name,
-                        errorText: (snapshot.data)),
-                  );
-                },
+                          hintText: AppStrings.name,
+                          labelText: AppStrings.name,
+                          errorText: (snapshot.data)),
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: AppSize.s28),
-            // Email TextEditField
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppPadding.p28, right: AppPadding.p28),
-              child: StreamBuilder<bool>(
-                stream: _viewModel.outputIsPasswordValid,
-                builder: (context, snapshot) {
-                  return TextFormField(
-                    keyboardType: TextInputType.emailAddress,
-                    controller: _userEmailEditingController,
-                    decoration: InputDecoration(
-                        errorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.error, width: AppSize.s1),
+
+              SizedBox(height: AppSize.s28),
+              // CountryCode and Mobile Number
+              Center(
+                child: Padding(
+                  padding: EdgeInsets.only(
+                    left: AppPadding.p28,
+                    right: AppPadding.p28,
+                    bottom: AppPadding.p28,
+                  ),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: CountryCodePicker(
+                          onChanged: (country) {
+                            // update view model with selected code
+                            _viewModel
+                                .setCountryCode(country.dialCode ?? EMPTY);
+                          },
+                          initialSelection: "+33",
+                          showCountryOnly: true,
+                          showOnlyCountryWhenClosed: true,
+                          favorite: ["+966", "+02", "+39"],
                         ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.primary, width: AppSize.s1),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: StreamBuilder<String?>(
+                          stream: _viewModel.outputErrorMobileNumber,
+                          builder: (context, snapshot) {
+                            return TextFormField(
+                              keyboardType: TextInputType.phone,
+                              controller: _mobileNumberTextEditingController,
+                              decoration: InputDecoration(
+                                  errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.error,
+                                        width: AppSize.s1),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.primary,
+                                        width: AppSize.s1),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.primary,
+                                        width: AppSize.s1),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.error,
+                                        width: AppSize.s1),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.grey,
+                                        width: AppSize.s1),
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.all(
+                                      Radius.circular(AppSize.s12),
+                                    ),
+                                    borderSide: BorderSide(
+                                        color: ColorManager.grey,
+                                        width: AppSize.s1),
+                                  ),
+                                  hintText: AppStrings.mobile_number,
+                                  labelText: AppStrings.mobile_number,
+                                  errorText: (snapshot.data)),
+                            );
+                          },
                         ),
-                        focusedErrorBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.primary, width: AppSize.s1),
-                        ),
-                        disabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.error, width: AppSize.s1),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.grey, width: AppSize.s1),
-                        ),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(AppSize.s12),
-                          ),
-                          borderSide: BorderSide(
-                              color: ColorManager.grey, width: AppSize.s1),
-                        ),
-                        hintText: AppStrings.email,
-                        labelText: AppStrings.email,
-                        errorText: (snapshot.data ?? true)
-                            ? null
-                            : AppStrings.passwordError),
-                  );
-                },
+                      ),
+                    ],
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: AppSize.s28),
-            // Password TextEditField
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppPadding.p28, right: AppPadding.p28),
-              child: StreamBuilder<String?>(
-                stream: _viewModel.outputErrorPassword,
-                builder: (context, snapshot) {
-                  return TextFormField(
-                    keyboardType: TextInputType.visiblePassword,
-                    controller: _PasswordTextEditingController,
-                    decoration: InputDecoration(
+
+              SizedBox(height: AppSize.s28),
+              // Email TextEditField
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorEmail,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.emailAddress,
+                      controller: _emailEditingController,
+                      decoration: InputDecoration(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
+                          ),
+                          hintText: AppStrings.emailHint,
+                          labelText: AppStrings.emailHint,
+                          errorText: (snapshot.data)),
+                    );
+                  },
+                ),
+              ),
+
+              SizedBox(height: AppSize.s28),
+              // Password TextEditField
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<String?>(
+                  stream: _viewModel.outputErrorPassword,
+                  builder: (context, snapshot) {
+                    return TextFormField(
+                      keyboardType: TextInputType.visiblePassword,
+                      controller: _PasswordTextEditingController,
+                      decoration: InputDecoration(
                         errorBorder: OutlineInputBorder(
                           borderRadius: BorderRadius.all(
                             Radius.circular(AppSize.s12),
@@ -258,64 +371,142 @@ Widget _getContentWidget() {
                         ),
                         hintText: AppStrings.password,
                         labelText: AppStrings.password,
-                        errorText: (snapshot.data ),),
-                  );
-                },
+                        errorText: (snapshot.data),
+                      ),
+                    );
+                  },
+                ),
               ),
-            ),
-            SizedBox(height: AppSize.s28),
-            // Register Button
-            Padding(
-              padding: EdgeInsets.only(
-                  left: AppPadding.p28, right: AppPadding.p28),
-              child: StreamBuilder<bool>(
-                stream: _viewModel.outputIsAllInputsValid,
-                builder: (context, snapshot) {
-                  return SizedBox(
-                    width: double.infinity,
-                    height: AppSize.s40,
-                    child: ElevatedButton(
-                        onPressed: (snapshot.data ?? false)
-                            ? () {
-                          _viewModel.register();
-                        }
-                            : null,
-                        child: Text(AppStrings.register)),
-                  );
-                },
-              ),
-            ),
-            // Already have an account? Login Button
-            Padding(
-              padding: EdgeInsets.only(
-                top: AppPadding.p8,
-                left: AppPadding.p28,
-                right: AppPadding.p28,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pushNamed(
-                          context, Routes.loginRoute);
-                    },
-                    child: Text(
-                      AppStrings.have_account,
-                      textAlign: TextAlign.end,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleSmall,
-                    ),
-                  ),
 
-                ],
+              SizedBox(height: AppSize.s28),
+              // Profile Picture TextEditField
+              Padding(padding: EdgeInsets.only(
+                left: AppPadding.p28,
+                right: AppPadding.p28,),
+                child: Container(
+                  decoration: BoxDecoration(border: Border.all(
+                      color: ColorManager.lightGrey
+                  ),), child: GestureDetector(
+                  child: _getMediaWidget(),
+                  onTap: () {
+                    _showPicker(context);
+                  },
+                ),
+                ),
+
               ),
-            ),
-          ],
+
+              SizedBox(height: AppSize.s28),
+              // Register Button
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<bool>(
+                  stream: _viewModel.outputIsAllInputsValid,
+                  builder: (context, snapshot) {
+                    return SizedBox(
+                      width: double.infinity,
+                      height: AppSize.s40,
+                      child: ElevatedButton(
+                          onPressed: (snapshot.data ?? false)
+                              ? () {
+                            _viewModel.register();
+                          }
+                              : null,
+                          child: Text(AppStrings.register)),
+                    );
+                  },
+                ),
+              ),
+              //  Login Button Already have an account?
+              Padding(
+                padding: EdgeInsets.only(
+                  top: AppPadding.p8,
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
+                child: TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text(
+                    AppStrings.haveAccount,
+                    textAlign: TextAlign.end,
+                    style: Theme
+                        .of(context)
+                        .textTheme
+                        .titleSmall,
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
-    ),
-  );
-}}
+    );
+  }
+
+  Widget _imagePickedByUser(File? image) {
+    if (image != null && image.path.isNotEmpty) {
+      return Image.file(image);
+    } else {
+      return Container();
+    }
+  }
+
+  _showPicker(BuildContext context) {
+    showModalBottomSheet(context: context, builder: (BuildContext context) {
+      return SafeArea(child: Wrap(
+        children: [
+          ListTile(
+            trailing: Icon(Icons.arrow_forward),
+            leading: Icon(Icons.camera),
+            title: Text(AppStrings.photoGallery),
+            onTap: () {
+              _imageFromGallery();
+              Navigator.of(context).pop();
+            },
+          ),
+          ListTile(
+            trailing: Icon(Icons.arrow_forward),
+            leading: Icon(Icons.camera_alt_rounded),
+            title: Text(AppStrings.photoCamera),
+            onTap: () {
+              _imageFromCamera();
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),);
+    });
+  }
+
+  _imageFromGallery() async{
+    var image = await picker.pickImage(source: ImageSource.gallery);
+    _viewModel.setProfilePicture(File(image?.path ?? ""));
+  }
+
+  _imageFromCamera() async {
+    var image = await picker.pickImage(source: ImageSource.camera);
+    _viewModel.setProfilePicture(File(image?.path ?? ""));
+  }
+
+  Widget _getMediaWidget(){
+    return Padding(
+      padding: EdgeInsets.only(left: AppPadding.p8, right: AppPadding.p8),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Flexible(child: Text(AppStrings.profilePicture)),
+          Flexible(child: StreamBuilder<File>(
+            stream: _viewModel.outputProfilePicture,
+            builder: (context, snapshot) {
+              return _imagePickedByUser(snapshot.data);
+            },
+          ),),
+          Flexible(child: SvgPicture.asset(ImageAssets.photoCameraIc)),
+        ],
+      ),
+    );
+  }
+}

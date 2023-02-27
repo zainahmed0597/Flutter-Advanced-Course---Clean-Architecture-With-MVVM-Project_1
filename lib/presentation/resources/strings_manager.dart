@@ -26,7 +26,11 @@ class AppStrings{
   static const String resetPassword = "Reset Password";
   static const String success = "Success";
   static const String name = "Name";
+  static const String mobile_number = "Mobile number";
   static const String email = "Email";
   static const String register = "Register";
-  static const String have_account = 'Already have a account ? Login';
+  static const String profilePicture = "Profile picture";
+  static const String haveAccount = 'Already have a account ? Login';
+  static const String photoGallery = "Photo from gallery";
+  static const String photoCamera = "Photo from camera";
 }

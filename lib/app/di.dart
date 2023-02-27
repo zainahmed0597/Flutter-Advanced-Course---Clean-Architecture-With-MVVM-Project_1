@@ -1,5 +1,6 @@
 import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:get_it/get_it.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_1/app/app_prefs.dart';
 import 'package:project_1/data/data_source/remote_data_source.dart';
 import 'package:project_1/data/network/app_api.dart';
@@ -62,5 +63,7 @@ initRegisterModule() {
             () => RegisterUseCase(instance()));
     instance.registerFactory<RegisterViewModel>(
             () => RegisterViewModel(instance()));
+    instance.registerFactory<ImagePicker>(
+            () => ImagePicker());
   }
 }
