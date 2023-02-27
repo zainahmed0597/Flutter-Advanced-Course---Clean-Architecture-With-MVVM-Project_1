@@ -33,9 +33,9 @@ dependencies:
 
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.0+1
-  retrofit: ^3.3.0
   analyzer: ^5.4.0
   dio: ^4.0.6
+  retrofit: ^3.3.0
   retrofit_generator: ^4.1.2
   dartz: ^0.10.1
   data_connection_checker: ^0.3.4

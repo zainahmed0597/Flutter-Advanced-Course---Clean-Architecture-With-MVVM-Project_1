@@ -16,7 +16,7 @@ class AppStrings{
   static const String passwordError = 'Password is wrong';
   static const String login = 'Login';
   static const String forgetPassword = 'Forget password';
-  static const String register = 'Not a member ? Sign up';
+  static const String register_Signup = 'Not a member ? Sign up';
   static const String loading = 'loading...';
   static const String retry_again = 'Retry Again';
   static const String ok = 'Ok';
@@ -24,4 +24,9 @@ class AppStrings{
   static const String emailHint = 'Email';
   static const String invalidEmail = "Invalid Email";
   static const String resetPassword = "Reset Password";
+  static const String success = "Success";
+  static const String name = "Name";
+  static const String email = "Email";
+  static const String register = "Register";
+  static const String have_account = 'Already have a account ? Login';
 }

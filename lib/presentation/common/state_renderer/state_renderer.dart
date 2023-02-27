@@ -6,13 +6,13 @@ import 'package:project_1/presentation/resources/font_manager.dart';
 import 'package:project_1/presentation/resources/strings_manager.dart';
 import 'package:project_1/presentation/resources/styles_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
-import '../../../data/network/failure.dart';
 import 'package:lottie/lottie.dart';
 
 enum StateRendererType {
   // POPUP STATES
   POPUP_LOADING_STATE,
   POPUP_ERROR_STATE,
+  POPUP_SUCCESS,
 
   // FULL SCREEN STATES
   FULL_SCREEN_LOADING_STATE,
@@ -50,6 +50,13 @@ class StateRenderer extends StatelessWidget {
       case StateRendererType.POPUP_ERROR_STATE:
         return _getPopUpDialog(context, [
           _getAnimatedImage(JsonAssets.error),
+          _getMessage(message),
+          _getRetryButton(AppStrings.ok, context)
+        ]);
+      case StateRendererType.POPUP_SUCCESS:
+        return _getPopUpDialog(context, [
+          _getAnimatedImage(JsonAssets.success),
+          _getMessage(title),
           _getMessage(message),
           _getRetryButton(AppStrings.ok, context)
         ]);

@@ -3,6 +3,7 @@ import 'package:project_1/presentation/resources/color_manager.dart';
 import '../../app/di.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
+import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 import 'forget_password_viewmodel.dart';
@@ -148,7 +149,30 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                     );
                   },
                 ),
-              )
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: AppPadding.p8,
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    TextButton(
+                      onPressed: () {
+                        // Navigator.pushNamed(
+                        //     context, Routes.forgetPasswordRoute);
+                      },
+                      child: Text(
+                        AppStrings.resend_email,
+                        textAlign: TextAlign.end,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),

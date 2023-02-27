@@ -7,7 +7,9 @@ import 'package:project_1/data/network/dio_factory.dart';
 import 'package:project_1/data/repository/repository_impl.dart';
 import 'package:project_1/domain/repository/repository.dart';
 import 'package:project_1/domain/usecase/login_usecase.dart';
+import 'package:project_1/domain/usecase/register_usecase.dart';
 import 'package:project_1/presentation/login/login_viewmodel.dart';
+import 'package:project_1/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/network/network_info.dart';
 import '../domain/usecase/forget_password_usecase.dart';
@@ -52,5 +54,13 @@ initForgotPasswordModule() {
             () => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
             () => ForgotPasswordViewModel(instance()));
+  }
+}
+initRegisterModule() {
+  if (!GetIt.I.isRegistered<RegisterUseCase>()) {
+    instance.registerFactory<RegisterUseCase>(
+            () => RegisterUseCase(instance()));
+    instance.registerFactory<RegisterViewModel>(
+            () => RegisterViewModel(instance()));
   }
 }

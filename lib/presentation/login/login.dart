@@ -251,7 +251,7 @@ class _LoginViewState extends State<LoginView> {
                             context, Routes.registerRoute);
                       },
                       child: Text(
-                        AppStrings.register,
+                        AppStrings.register_Signup,
                         textAlign: TextAlign.end,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),

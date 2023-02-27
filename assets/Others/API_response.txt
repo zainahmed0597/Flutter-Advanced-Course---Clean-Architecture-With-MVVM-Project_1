@@ -1,0 +1,62 @@
+POST: /customers/login
+BODY:
+
+{
+    "email":"abc",
+    "password":"123456",
+    "imei":"",
+    "deviceType":""
+}
+
+RESPOSNE:
+{
+    "status":0,
+    "message":"success",
+    
+    "customer":{
+        "id":"123456789",
+        "name":"Zain Ahmed",
+        "numOfNotifications":12
+    },
+    "contacts":{
+        "phone":"123456789",
+        "link":"zain@facebook.com",
+        "email":"zain@gmail.com"
+    }
+}
+/////////////////
+POST:/customers/forgotPassword
+{
+    "email":"abc@gmail.com"
+}
+{
+    "status":0,
+    "message":"success",
+    "support":"We have an email to you. If you need any help, contact us on support@app.com"
+}
+////////////////
+POST:/customers/register
+{
+    "country_mobile_code":"+966",
+    "user_name":"Zain Ahmed",
+    "email":"abc@gmail.com",
+    "password":"123456",
+    "mobile_number":"123456789",
+    "profile_picture":""
+}
+{
+    "status":0,
+    "message":"success",
+    
+    "customer":{
+        "id":"123456789",
+        "name":"Zain Ahmed",
+        "numOfNotifications":12
+    },
+    "contacts":{
+        "phone":"123456789",
+        "link":"zain@facebook.com",
+        "email":"zain@gmail.com"
+    }
+}
+///////////
