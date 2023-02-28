@@ -142,7 +142,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
               ),
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               Padding(
                 padding: EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -204,7 +204,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
               ),
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               Padding(
                 padding: EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),

@@ -1,18 +1,14 @@
-
-
 import 'dart:io';
 
-import 'package:country_code_picker/country_code_picker.dart';
+// import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_1/app/di.dart';
-import 'package:project_1/data/mapper/mapper.dart';
 import 'package:project_1/presentation/register/register_viewmodel.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
-import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 
@@ -28,12 +24,12 @@ class _RegisterViewState extends State<RegisterView> {
   ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
   TextEditingController _userNameTextEditingController =
-  TextEditingController();
+      TextEditingController();
   TextEditingController _mobileNumberTextEditingController =
-  TextEditingController();
+      TextEditingController();
   TextEditingController _emailEditingController = TextEditingController();
   TextEditingController _PasswordTextEditingController =
-  TextEditingController();
+      TextEditingController();
 
   @override
   void initState() {
@@ -89,15 +85,14 @@ class _RegisterViewState extends State<RegisterView> {
 
   Widget _getContentWidget() {
     return Container(
-      padding: EdgeInsets.only(top: AppPadding.p60),
+      padding: EdgeInsets.only(top: AppPadding.p0),
       child: SingleChildScrollView(
         child: Form(
           key: _formKey,
           child: Column(
             children: [
               Image(image: AssetImage(ImageAssets.splashLogo)),
-
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               // Name TextEditField
               Padding(
                 padding: EdgeInsets.only(
@@ -159,31 +154,32 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
 
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               // CountryCode and Mobile Number
               Center(
                 child: Padding(
                   padding: EdgeInsets.only(
+                    // top: AppPadding.p12,
                     left: AppPadding.p28,
                     right: AppPadding.p28,
-                    bottom: AppPadding.p28,
+                    bottom: AppPadding.p12,
                   ),
                   child: Row(
                     children: [
-                      Expanded(
-                        flex: 1,
-                        child: CountryCodePicker(
-                          onChanged: (country) {
-                            // update view model with selected code
-                            _viewModel
-                                .setCountryCode(country.dialCode ?? EMPTY);
-                          },
-                          initialSelection: "+33",
-                          showCountryOnly: true,
-                          showOnlyCountryWhenClosed: true,
-                          favorite: ["+966", "+02", "+39"],
-                        ),
-                      ),
+                      // Expanded(
+                      //   flex: 1,
+                      //   child: CountryCodePicker(
+                      //     onChanged: (country) {
+                      //       // update view model with selected code
+                      //       _viewModel
+                      //           .setCountryCode(country.dialCode ?? EMPTY);
+                      //     },
+                      //     initialSelection: "+33",
+                      //     showCountryOnly: true,
+                      //     showOnlyCountryWhenClosed: true,
+                      //     favorite: ["+966", "+02", "+39"],
+                      //   ),
+                      // ),
                       Expanded(
                         flex: 1,
                         child: StreamBuilder<String?>(
@@ -253,7 +249,6 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
 
-              SizedBox(height: AppSize.s28),
               // Email TextEditField
               Padding(
                 padding: EdgeInsets.only(
@@ -315,7 +310,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
 
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               // Password TextEditField
               Padding(
                 padding: EdgeInsets.only(
@@ -378,25 +373,31 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
 
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               // Profile Picture TextEditField
-              Padding(padding: EdgeInsets.only(
-                left: AppPadding.p28,
-                right: AppPadding.p28,),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: AppPadding.p28,
+                  right: AppPadding.p28,
+                ),
                 child: Container(
-                  decoration: BoxDecoration(border: Border.all(
-                      color: ColorManager.lightGrey
-                  ),), child: GestureDetector(
-                  child: _getMediaWidget(),
-                  onTap: () {
-                    _showPicker(context);
-                  },
+                  height: AppSize.s45,
+                  decoration: BoxDecoration(
+                    border: Border.all(color: ColorManager.lightGrey),
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(AppSize.s12),
+                    ),
+                  ),
+                  child: GestureDetector(
+                    child: _getMediaWidget(),
+                    onTap: () {
+                      _showPicker(context);
+                    },
+                  ),
                 ),
-                ),
-
               ),
 
-              SizedBox(height: AppSize.s28),
+              SizedBox(height: AppSize.s12),
               // Register Button
               Padding(
                 padding: EdgeInsets.only(
@@ -410,8 +411,8 @@ class _RegisterViewState extends State<RegisterView> {
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false)
                               ? () {
-                            _viewModel.register();
-                          }
+                                  _viewModel.register();
+                                }
                               : null,
                           child: Text(AppStrings.register)),
                     );
@@ -432,10 +433,7 @@ class _RegisterViewState extends State<RegisterView> {
                   child: Text(
                     AppStrings.haveAccount,
                     textAlign: TextAlign.end,
-                    style: Theme
-                        .of(context)
-                        .textTheme
-                        .titleSmall,
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
               ),
@@ -455,33 +453,37 @@ class _RegisterViewState extends State<RegisterView> {
   }
 
   _showPicker(BuildContext context) {
-    showModalBottomSheet(context: context, builder: (BuildContext context) {
-      return SafeArea(child: Wrap(
-        children: [
-          ListTile(
-            trailing: Icon(Icons.arrow_forward),
-            leading: Icon(Icons.camera),
-            title: Text(AppStrings.photoGallery),
-            onTap: () {
-              _imageFromGallery();
-              Navigator.of(context).pop();
-            },
-          ),
-          ListTile(
-            trailing: Icon(Icons.arrow_forward),
-            leading: Icon(Icons.camera_alt_rounded),
-            title: Text(AppStrings.photoCamera),
-            onTap: () {
-              _imageFromCamera();
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),);
-    });
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext context) {
+          return SafeArea(
+            child: Wrap(
+              children: [
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera),
+                  title: Text(AppStrings.photoGallery),
+                  onTap: () {
+                    _imageFromGallery();
+                    Navigator.of(context).pop();
+                  },
+                ),
+                ListTile(
+                  trailing: Icon(Icons.arrow_forward),
+                  leading: Icon(Icons.camera_alt_rounded),
+                  title: Text(AppStrings.photoCamera),
+                  onTap: () {
+                    _imageFromCamera();
+                    Navigator.of(context).pop();
+                  },
+                )
+              ],
+            ),
+          );
+        });
   }
 
-  _imageFromGallery() async{
+  _imageFromGallery() async {
     var image = await picker.pickImage(source: ImageSource.gallery);
     _viewModel.setProfilePicture(File(image?.path ?? ""));
   }
@@ -491,19 +493,21 @@ class _RegisterViewState extends State<RegisterView> {
     _viewModel.setProfilePicture(File(image?.path ?? ""));
   }
 
-  Widget _getMediaWidget(){
+  Widget _getMediaWidget() {
     return Padding(
       padding: EdgeInsets.only(left: AppPadding.p8, right: AppPadding.p8),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Flexible(child: Text(AppStrings.profilePicture)),
-          Flexible(child: StreamBuilder<File>(
-            stream: _viewModel.outputProfilePicture,
-            builder: (context, snapshot) {
-              return _imagePickedByUser(snapshot.data);
-            },
-          ),),
+          Flexible(
+            child: StreamBuilder<File>(
+              stream: _viewModel.outputProfilePicture,
+              builder: (context, snapshot) {
+                return _imagePickedByUser(snapshot.data);
+              },
+            ),
+          ),
           Flexible(child: SvgPicture.asset(ImageAssets.photoCameraIc)),
         ],
       ),

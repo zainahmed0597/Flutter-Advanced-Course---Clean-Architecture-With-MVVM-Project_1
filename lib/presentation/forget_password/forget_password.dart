@@ -130,7 +130,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                 ),
               ),
               const SizedBox(
-                height: AppSize.s28,
+                height: AppSize.s12,
               ),
               Padding(
                 padding: const EdgeInsets.only(
