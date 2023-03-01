@@ -1,6 +1,7 @@
 import 'dart:io';
 
 // import 'package:country_code_picker/country_code_picker.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
@@ -30,6 +31,9 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController _emailEditingController = TextEditingController();
   TextEditingController _PasswordTextEditingController =
       TextEditingController();
+
+  final countryPicker = const FlCountryCodePicker();
+  CountryCode? countryCodeSelected;
 
   @override
   void initState() {
@@ -153,102 +157,106 @@ class _RegisterViewState extends State<RegisterView> {
                   },
                 ),
               ),
-
               SizedBox(height: AppSize.s12),
               // CountryCode and Mobile Number
-              Center(
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    // top: AppPadding.p12,
-                    left: AppPadding.p28,
-                    right: AppPadding.p28,
-                    bottom: AppPadding.p12,
-                  ),
-                  child: Row(
-                    children: [
-                      // Expanded(
-                      //   flex: 1,
-                      //   child: CountryCodePicker(
-                      //     onChanged: (country) {
-                      //       // update view model with selected code
-                      //       _viewModel
-                      //           .setCountryCode(country.dialCode ?? EMPTY);
-                      //     },
-                      //     initialSelection: "+33",
-                      //     showCountryOnly: true,
-                      //     showOnlyCountryWhenClosed: true,
-                      //     favorite: ["+966", "+02", "+39"],
-                      //   ),
-                      // ),
-                      Expanded(
-                        flex: 1,
-                        child: StreamBuilder<String?>(
-                          stream: _viewModel.outputErrorMobileNumber,
-                          builder: (context, snapshot) {
-                            return TextFormField(
-                              keyboardType: TextInputType.phone,
-                              controller: _mobileNumberTextEditingController,
-                              decoration: InputDecoration(
-                                  errorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.error,
-                                        width: AppSize.s1),
+              Padding(
+                padding: EdgeInsets.only(
+                    left: AppPadding.p28, right: AppPadding.p28),
+                child: StreamBuilder<String?>(
+                    stream: _viewModel.outputErrorMobileNumber,
+                    builder: (context, snapshot) {
+                      return TextFormField(
+                        controller: _mobileNumberTextEditingController,
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        maxLines: 1,
+                        decoration: InputDecoration(
+                          errorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
+                          ),
+                          focusedErrorBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.primary, width: AppSize.s1),
+                          ),
+                          disabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.error, width: AppSize.s1),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(AppSize.s12),
+                            ),
+                            borderSide: BorderSide(
+                                color: ColorManager.grey, width: AppSize.s1),
+                          ),
+                          hintText: AppStrings.mobile_number,
+                          labelText: AppStrings.mobile_number,
+                          errorText: (snapshot.data),
+                          prefixIcon: Container(
+                            padding: const EdgeInsets.all(AppSize.s6),
+                            margin: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                GestureDetector(
+                                  onTap: () async {
+                                    final code = await countryPicker.showPicker(
+                                        context: context);
+                                    setState(() {
+                                      countryCodeSelected = code;
+                                      // update view model with selected code
+                                      _viewModel.setCountryCode(
+                                          countryCodeSelected.toString());
+                                    });
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Container(
+                                        child: countryCodeSelected != null
+                                            ? countryCodeSelected!.flagImage()
+                                            : null,
+                                      ),
+                                      _sizeBox(),
+                                      Text(
+                                        countryCodeSelected?.dialCode ?? "+1",
+                                        style:
+                                            TextStyle(color: ColorManager.grey),
+                                      ),
+                                    ],
                                   ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.primary,
-                                        width: AppSize.s1),
-                                  ),
-                                  focusedErrorBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.primary,
-                                        width: AppSize.s1),
-                                  ),
-                                  disabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.error,
-                                        width: AppSize.s1),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.grey,
-                                        width: AppSize.s1),
-                                  ),
-                                  border: OutlineInputBorder(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(AppSize.s12),
-                                    ),
-                                    borderSide: BorderSide(
-                                        color: ColorManager.grey,
-                                        width: AppSize.s1),
-                                  ),
-                                  hintText: AppStrings.mobile_number,
-                                  labelText: AppStrings.mobile_number,
-                                  errorText: (snapshot.data)),
-                            );
-                          },
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
+                      );
+                    }),
               ),
-
+              SizedBox(height: AppSize.s12),
               // Email TextEditField
               Padding(
                 padding: EdgeInsets.only(
@@ -309,7 +317,6 @@ class _RegisterViewState extends State<RegisterView> {
                   },
                 ),
               ),
-
               SizedBox(height: AppSize.s12),
               // Password TextEditField
               Padding(
@@ -372,7 +379,6 @@ class _RegisterViewState extends State<RegisterView> {
                   },
                 ),
               ),
-
               SizedBox(height: AppSize.s12),
               // Profile Picture TextEditField
               Padding(
@@ -396,7 +402,6 @@ class _RegisterViewState extends State<RegisterView> {
                   ),
                 ),
               ),
-
               SizedBox(height: AppSize.s12),
               // Register Button
               Padding(
@@ -449,6 +454,18 @@ class _RegisterViewState extends State<RegisterView> {
       return Image.file(image);
     } else {
       return Container();
+    }
+  }
+
+  Widget _sizeBox() {
+    if (countryCodeSelected != null) {
+      return const SizedBox(
+        width: AppSize.s14,
+      );
+    } else {
+      return const SizedBox(
+        width: AppSize.s0,
+      );
     }
   }
 

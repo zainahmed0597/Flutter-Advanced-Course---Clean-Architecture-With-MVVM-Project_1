@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/presentation/resources/routes_manager.dart';
 import '../presentation/resources/theme_manager.dart';
+import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatefulWidget {
   // const MyApp({super.key}); // default constructor
@@ -24,6 +26,14 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: RouteGenerator.getRoute,
       initialRoute:Routes.splashRoute,
       theme: getApplicationTheme(),
+
+      supportedLocales: flc.supportedLocales.map((e) => Locale(e)),
+      localizationsDelegates: const [
+        flc.CountryLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
     );
   }
 }
