@@ -3,11 +3,9 @@ import 'package:project_1/presentation/resources/color_manager.dart';
 import '../../app/di.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
-import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 import 'forget_password_viewmodel.dart';
-
 
 class ForgetPasswordView extends StatefulWidget {
   const ForgetPasswordView({Key? key}) : super(key: key);
@@ -17,18 +15,17 @@ class ForgetPasswordView extends StatefulWidget {
 }
 
 class _ForgetPasswordViewState extends State<ForgetPasswordView> {
-
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTextEditingController =
-  TextEditingController();
+      TextEditingController();
 
   final ForgotPasswordViewModel _viewModel =
-  instance<ForgotPasswordViewModel>();
+      instance<ForgotPasswordViewModel>();
 
   bind() {
     _viewModel.start();
     _emailTextEditingController.addListener(
-            () => _viewModel.setEmail(_emailTextEditingController.text));
+        () => _viewModel.setEmail(_emailTextEditingController.text));
   }
 
   @override
@@ -43,7 +40,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
       body: StreamBuilder<FlowState>(
         stream: _viewModel.outputState,
         builder: (context, snapshot) {
-          return snapshot.data?.getScreenWidget(context,_getContentWidget(),
+          return snapshot.data?.getScreenWidget(context, _getContentWidget(),
                   () {
                 _viewModel.forgotPassword();
               }) ??
@@ -52,7 +49,6 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
       ),
     );
   }
-
 
   Widget _getContentWidget() {
     return Container(
@@ -65,9 +61,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           child: Column(
             children: [
               const Image(image: AssetImage(ImageAssets.splashLogo)),
-              const SizedBox(
-                height: AppSize.s28,
-              ),
+              const SizedBox(height: AppSize.s28),
               Padding(
                 padding: const EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -78,48 +72,6 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailTextEditingController,
                       decoration: InputDecoration(
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
                           hintText: AppStrings.emailHint,
                           labelText: AppStrings.emailHint,
                           errorText: (snapshot.data ?? true)
@@ -129,9 +81,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   },
                 ),
               ),
-              const SizedBox(
-                height: AppSize.s12,
-              ),
+              const SizedBox(height: AppSize.s24),
               Padding(
                 padding: const EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -140,7 +90,7 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   builder: (context, snapshot) {
                     return SizedBox(
                       width: double.infinity,
-                      height: AppSize.s40,
+                      height: AppSize.s45,
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false)
                               ? () => _viewModel.forgotPassword()
@@ -180,4 +130,3 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
     );
   }
 }
-

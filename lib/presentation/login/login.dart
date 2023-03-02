@@ -91,48 +91,6 @@ class _LoginViewState extends State<LoginView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _userNameController,
                       decoration: InputDecoration(
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
                           hintText: AppStrings.username,
                           labelText: AppStrings.username,
                           errorText: (snapshot.data ?? true)
@@ -143,6 +101,7 @@ class _LoginViewState extends State<LoginView> {
                 ),
               ),
               SizedBox(height: AppSize.s12),
+              // Username TextField
               Padding(
                 padding: EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -153,48 +112,6 @@ class _LoginViewState extends State<LoginView> {
                       keyboardType: TextInputType.visiblePassword,
                       controller: _passwordController,
                       decoration: InputDecoration(
-                          errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.primary, width: AppSize.s1),
-                          ),
-                          disabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.error, width: AppSize.s1),
-                          ),
-                          enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(AppSize.s12),
-                            ),
-                            borderSide: BorderSide(
-                                color: ColorManager.grey, width: AppSize.s1),
-                          ),
                           hintText: AppStrings.password,
                           labelText: AppStrings.password,
                           errorText: (snapshot.data ?? true)
@@ -204,7 +121,7 @@ class _LoginViewState extends State<LoginView> {
                   },
                 ),
               ),
-              SizedBox(height: AppSize.s12),
+              SizedBox(height: AppSize.s24),
               Padding(
                 padding: EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -213,7 +130,7 @@ class _LoginViewState extends State<LoginView> {
                   builder: (context, snapshot) {
                     return SizedBox(
                       width: double.infinity,
-                      height: AppSize.s40,
+                      height: AppSize.s45,
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false)
                               ? () {
@@ -247,8 +164,7 @@ class _LoginViewState extends State<LoginView> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.pushNamed(
-                            context, Routes.registerRoute);
+                        Navigator.pushNamed(context, Routes.registerRoute);
                       },
                       child: Text(
                         AppStrings.register_Signup,

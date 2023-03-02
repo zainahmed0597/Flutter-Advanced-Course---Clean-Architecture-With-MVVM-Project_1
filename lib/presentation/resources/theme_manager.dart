@@ -12,8 +12,6 @@ ThemeData getApplicationTheme() {
     primaryColorDark: ColorManager.darkPrimary,
     primaryColorLight: ColorManager.primaryOpacity70,
     disabledColor: ColorManager.grey1,
-    // will be used in case of disable button for example
-    accentColor: ColorManager.grey,
 
     // ripple color
     splashColor: ColorManager.primaryOpacity70,
@@ -45,10 +43,10 @@ ThemeData getApplicationTheme() {
     // elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: getRegularStyle(color: ColorManager.white),
-        primary: ColorManager.primary,
+        textStyle: getRegularStyle(color: ColorManager.white,),
+        backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(AppSize.s12),
+          borderRadius: BorderRadius.circular(AppSize.s8),
         ),
       ),
     ),
@@ -82,30 +80,42 @@ ThemeData getApplicationTheme() {
       // error style
       errorStyle: getRegularStyle(color: ColorManager.error),
 
+      // border
+      border: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
+      ),
+
       // enabled border
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s12),
+        borderSide: BorderSide(color: ColorManager.grey, width: AppSize.s1),
+        borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
+      ),
+
+      // disabled border
+     disabledBorder: OutlineInputBorder(
+        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
 
       // focus border
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s12),
+        borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
         // focus border
       ),
 
       // error border
       errorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s12),
+        borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
 
       // focus error border
       focusedErrorBorder: OutlineInputBorder(
-        borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s12),
+        borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
-    ),
+    ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorManager.grey),
   );
 }
