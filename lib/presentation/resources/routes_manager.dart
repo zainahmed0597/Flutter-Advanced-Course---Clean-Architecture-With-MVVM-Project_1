@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_1/presentation/forget_password/forget_password.dart';
 import 'package:project_1/presentation/login/login.dart';
-import 'package:project_1/presentation/main/main.dart';
+import 'package:project_1/presentation/main/main_view.dart';
 import 'package:project_1/presentation/onboarding/onboarding.dart';
 import 'package:project_1/presentation/register/register.dart';
 import 'package:project_1/presentation/resources/strings_manager.dart';

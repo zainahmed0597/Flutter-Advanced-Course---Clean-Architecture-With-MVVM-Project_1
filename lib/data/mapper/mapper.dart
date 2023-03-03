@@ -1,7 +1,11 @@
-import 'package:project_1/app/extensions.dart';
-import 'package:project_1/data/responses/responses.dart';
-import 'package:project_1/domain/model/model.dart';
 
+// to convert the response into a non nullable object (model)
+
+
+import 'package:project_1/app/extensions.dart';
+
+import '../../domain/model/model.dart';
+import '../responses/responses.dart';
 
 const EMPTY = "";
 const ZERO = 0;
@@ -32,5 +36,41 @@ extension AuthenticationResponseMapper on AuthenticationResponse? {
 extension ForgotPasswordResponseMapper on ForgotPasswordResponse? {
   String toDomain() {
     return this?.support?.orEmpty() ?? EMPTY;
+  }
+}
+
+extension ServiceResponseMapper on ServiceResponse? {
+  Service toDomain() {
+    return Service(this?.id?.orZero() ?? ZERO, this?.title?.orEmpty() ?? EMPTY,
+        this?.image?.orEmpty() ?? EMPTY);
+  }
+}
+
+extension StoreResponseMapper on StoreResponse? {
+  Store toDomain() {
+    return Store(this?.id?.orZero() ?? ZERO, this?.title?.orEmpty() ?? EMPTY,
+        this?.image?.orEmpty() ?? EMPTY);
+  }
+}
+
+extension BannerResponseMapper on BannerResponse? {
+  BannerAd toDomain() {
+    return BannerAd(this?.id?.orZero() ?? ZERO, this?.title?.orEmpty() ?? EMPTY,
+        this?.image?.orEmpty() ?? EMPTY, this?.link?.orEmpty() ?? EMPTY);
+  }
+}
+
+extension HomeResponseMapper on HomeResponse?{
+
+  HomeObject toDomain(){
+    List<Service> mappedServices = (this?.data?.services?.map((services) => services.toDomain()) ??
+        Iterable.empty()).cast<Service>().toList();
+    List<Store> mappedStore = (this?.data?.stores?.map((store) => store.toDomain()) ??
+        Iterable.empty()).cast<Store>().toList();
+    List<BannerAd> mappedBannerAd = (this?.data?.banners?.map((banners) => banners.toDomain()) ??
+        Iterable.empty()).cast<BannerAd>().toList();
+
+    var data = HomeData(mappedServices, mappedStore, mappedBannerAd);
+    return HomeObject(data);
   }
 }
