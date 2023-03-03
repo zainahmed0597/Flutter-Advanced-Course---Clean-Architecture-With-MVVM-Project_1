@@ -26,7 +26,6 @@ class LoadingState extends FlowState {
 }
 
 // error state (POPUP, FULL LOADING)
-
 class ErrorState extends FlowState {
   StateRendererType stateRendererType;
   String message;
@@ -40,7 +39,7 @@ class ErrorState extends FlowState {
   StateRendererType getStateRendererType() => stateRendererType;
 }
 
-// content state
+// CONTENT STATE
 
 class ContentState extends FlowState {
   ContentState();
@@ -53,7 +52,7 @@ class ContentState extends FlowState {
       StateRendererType.CONTENT_SCREEN_STATE;
 }
 
-// empty state
+// EMPTY STATE
 
 class EmptyState extends FlowState {
   String message;
@@ -69,7 +68,6 @@ class EmptyState extends FlowState {
 }
 
 // success state
-
 class SuccessState extends FlowState {
   String message;
 
@@ -94,7 +92,7 @@ extension FlowStateExtension on FlowState {
             // return the content ui of the screen
             return contentScreenWidget;
           } else // StateRendererType.FULL_SCREEN_LOADING_STATE
-          {
+              {
             return StateRenderer(
                 stateRendererType: getStateRendererType(),
                 message: getMessage(),
@@ -103,7 +101,7 @@ extension FlowStateExtension on FlowState {
         }
       case ErrorState:
         {
-          dismissedDialog(context);
+          dismissDialog(context);
           if (getStateRendererType() == StateRendererType.POPUP_ERROR_STATE) {
             // showing popup dialog
             showPopUp(context, getStateRendererType(), getMessage());
@@ -119,22 +117,20 @@ extension FlowStateExtension on FlowState {
         }
       case ContentState:
         {
-          dismissedDialog(context);
+          dismissDialog(context);
           return contentScreenWidget;
         }
       case EmptyState:
         {
-          // i should check if we are showing loading popup to remove it before showing
-          dismissedDialog(context);
-          // show popup
-          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(),
-              title: AppStrings.success);
-          return contentScreenWidget;
+          return StateRenderer(
+              stateRendererType: getStateRendererType(),
+              message: getMessage(),
+              retryActionFunction: retryActionFunction);
         }
       case SuccessState:
         {
           // i should check if we are showing loading popup to remove it before showing success popup
-          dismissedDialog(context);
+          dismissDialog(context);
 
           // show popup
           showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(),
@@ -149,25 +145,24 @@ extension FlowStateExtension on FlowState {
     }
   }
 
-  dismissedDialog(BuildContext context){
-    if (_isThereCurrentDialogShowing(context)){
+  dismissDialog(BuildContext context) {
+    if (_isThereCurrentDialogShowing(context)) {
       Navigator.of(context, rootNavigator: true).pop(true);
     }
   }
-  _isThereCurrentDialogShowing(BuildContext context) => ModalRoute.of(context)?.isCurrent != true;
+
+  _isThereCurrentDialogShowing(BuildContext context) =>
+      ModalRoute.of(context)?.isCurrent != true;
 
   showPopUp(BuildContext context, StateRendererType stateRendererType,
       String message,{String title = EMPTY}) {
-    WidgetsBinding.instance?.addPostFrameCallback(
-      (_) => showDialog(
+    WidgetsBinding.instance?.addPostFrameCallback((_) => showDialog(
         context: context,
         builder: (BuildContext context) => StateRenderer(
           stateRendererType: stateRendererType,
           message: message,
           title: title,
           retryActionFunction: () {},
-        ),
-      ),
-    );
+        )));
   }
 }

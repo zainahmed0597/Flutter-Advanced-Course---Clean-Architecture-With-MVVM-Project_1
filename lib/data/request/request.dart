@@ -1,4 +1,4 @@
-class LoginRequest{
+class LoginRequest {
   String email;
   String password;
   String imei;

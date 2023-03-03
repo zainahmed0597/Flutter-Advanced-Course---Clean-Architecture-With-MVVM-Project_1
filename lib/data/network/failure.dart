@@ -1,6 +1,6 @@
 import 'package:project_1/data/network/error_handler.dart';
 
-class Failure{
+class Failure {
   int code; // 200 or 400
   String message; // error or success
 
@@ -8,5 +8,5 @@ class Failure{
 }
 
 class DefaultFailure extends Failure {
-  DefaultFailure():super(ResponseCode.DEFAULT,ResponseMessage.DEFAULT);
+  DefaultFailure() : super(ResponseCode.DEFAULT, ResponseMessage.DEFAULT);
 }

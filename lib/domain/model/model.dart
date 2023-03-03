@@ -15,11 +15,11 @@ class Customer {
 }
 
 class Contacts {
+  String email;
   String phone;
   String link;
-  String email;
 
-  Contacts(this.phone, this.link, this.email);
+  Contacts(this.email, this.phone, this.link);
 }
 
 class Authentication {

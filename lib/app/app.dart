@@ -5,17 +5,12 @@ import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
 import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatefulWidget {
-  // const MyApp({super.key}); // default constructor
-
   MyApp._internal(); // private named constructor
   int appState = 0;
-  static final MyApp instance =
-      MyApp._internal(); // single instance -- singleton
-
-  factory MyApp() => instance; // factory for class instance
-
+  static final MyApp instance = MyApp._internal(); // single instance -- singleton
+  factory MyApp() => instance; // factory for the class instance
   @override
-  State<MyApp> createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
@@ -24,7 +19,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRoute,
-      initialRoute:Routes.splashRoute,
+      initialRoute: Routes.splashRoute,
       theme: getApplicationTheme(),
 
       supportedLocales: flc.supportedLocales.map((e) => Locale(e)),

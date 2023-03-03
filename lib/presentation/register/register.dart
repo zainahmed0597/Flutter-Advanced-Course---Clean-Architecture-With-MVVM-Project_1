@@ -1,13 +1,16 @@
 import 'dart:io';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_1/app/di.dart';
 import 'package:project_1/presentation/register/register_viewmodel.dart';
+import '../../app/app_prefs.dart';
 import '../common/state_renderer/state_render_impl.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
+import '../resources/routes_manager.dart';
 import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 
@@ -20,8 +23,10 @@ class RegisterView extends StatefulWidget {
 
 class _RegisterViewState extends State<RegisterView> {
   RegisterViewModel _viewModel = instance<RegisterViewModel>();
+  AppPreferences _appPreferences = instance<AppPreferences>();
   ImagePicker picker = instance<ImagePicker>();
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController _userNameTextEditingController =
       TextEditingController();
   TextEditingController _mobileNumberTextEditingController =
@@ -52,6 +57,14 @@ class _RegisterViewState extends State<RegisterView> {
     });
     _PasswordTextEditingController.addListener(() {
       _viewModel.setPassword(_PasswordTextEditingController.text);
+    });
+    _viewModel.isUserLoggedInSuccessFullyStreamController.stream
+        .listen((isSuccessLoggedIn) {
+      // navigate to main screen
+      SchedulerBinding.instance?.addPostFrameCallback((_) {
+        _appPreferences.setIsUserLoggedIn();
+        Navigator.of(context).pushReplacementNamed(Routes.mainRoute);
+      });
     });
   }
 
@@ -144,7 +157,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       countryCodeSelected = code;
                                       // update view model with selected code
                                       _viewModel.setCountryCode(
-                                          countryCodeSelected!.dialCode);
+                                          countryCodeSelected!.dialCode.toString());
                                     });
                                   },
                                   child: Row(

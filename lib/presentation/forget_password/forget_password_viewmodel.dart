@@ -5,7 +5,6 @@ import '../common/state_renderer/state_renderer.dart';
 import 'package:project_1/presentation/base/baseviewmodel.dart';
 import '../../app/functions.dart';
 
-
 class ForgotPasswordViewModel extends BaseViewModel
     with ForgotPasswordViewModelInput, ForgotPasswordViewModelOutput {
   final StreamController _emailStreamController =

@@ -23,23 +23,29 @@ Future<void> initAppModule() async {
 
   // shared prefs instance
   instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+
   // app prefs instance
   instance
       .registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
+
   // network info
   instance.registerLazySingleton<NetworkInfo>(
-      () => NetworkInfoImpl(DataConnectionChecker()));
+          () => NetworkInfoImpl(DataConnectionChecker()));
+
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
-  // app service client
+
+  // app  service client
   final dio = await instance<DioFactory>().getDio();
   instance.registerLazySingleton<AppServiceClient>(() => AppServiceClient(dio));
+
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
-      () => RemoteDataSourseImplementer(instance()));
+          () => RemoteDataSourceImplementer(instance()));
+
   // repository
   instance.registerLazySingleton<Repository>(
-      () => RepositoryImpl(instance(), instance()));
+          () => RepositoryImpl(instance(), instance()));
 }
 
 initLoginModule() {
@@ -57,13 +63,13 @@ initForgotPasswordModule() {
             () => ForgotPasswordViewModel(instance()));
   }
 }
+
 initRegisterModule() {
   if (!GetIt.I.isRegistered<RegisterUseCase>()) {
-    instance.registerFactory<RegisterUseCase>(
-            () => RegisterUseCase(instance()));
+    instance
+        .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
     instance.registerFactory<RegisterViewModel>(
             () => RegisterViewModel(instance()));
-    instance.registerFactory<ImagePicker>(
-            () => ImagePicker());
+    instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
 }

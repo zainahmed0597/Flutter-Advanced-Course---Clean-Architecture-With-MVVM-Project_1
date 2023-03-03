@@ -19,18 +19,19 @@ class RepositoryImpl extends Repository {
       LoginRequest loginRequest) async {
     if (await _networkInfo.isConnected) {
       try {
-        // it's save to call the API
+        // its safe to call the API
         final response = await _remoteDataSource.login(loginRequest);
+
         if (response.status == ApiInternalStatus.SUCCESS) // success
-        {
-          // return data (success), return right "Authentication"
+            {
+          // return data (success)
+          // return right
           return Right(response.toDomain());
         } else {
-          // return biz logic error, return left Failure
-          return Left(Failure(
-            response.status ?? ApiInternalStatus.FAILURE,
-            response.message ?? ResponseMessage.DEFAULT,
-          ));
+          // return biz logic error
+          // return left
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
         return (Left(ErrorHandler.handle(error).failure));
@@ -40,7 +41,6 @@ class RepositoryImpl extends Repository {
       return Left(DataSource.NO_INTERNET_CONNECTION.getFailure());
     }
   }
-
 
   @override
   Future<Either<Failure, String>> forgotPassword(String email) async {
@@ -70,21 +70,23 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Either<Failure, Authentication>> register(RegisterRequest registerRequest) async{
+  Future<Either<Failure, Authentication>> register(
+      RegisterRequest registerRequest) async {
     if (await _networkInfo.isConnected) {
       try {
-        // it's save to call the API
+        // its safe to call the API
         final response = await _remoteDataSource.register(registerRequest);
+
         if (response.status == ApiInternalStatus.SUCCESS) // success
             {
-          // return data (success), return right "Authentication"
+          // return data (success)
+          // return right
           return Right(response.toDomain());
         } else {
-          // return biz logic error, return left Failure
-          return Left(Failure(
-            response.status ?? ApiInternalStatus.FAILURE,
-            response.message ?? ResponseMessage.DEFAULT,
-          ));
+          // return biz logic error
+          // return left
+          return Left(Failure(response.status ?? ApiInternalStatus.FAILURE,
+              response.message ?? ResponseMessage.DEFAULT));
         }
       } catch (error) {
         return (Left(ErrorHandler.handle(error).failure));
