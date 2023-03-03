@@ -144,7 +144,7 @@ class _RegisterViewState extends State<RegisterView> {
                                       countryCodeSelected = code;
                                       // update view model with selected code
                                       _viewModel.setCountryCode(
-                                          countryCodeSelected.toString());
+                                          countryCodeSelected!.dialCode);
                                     });
                                   },
                                   child: Row(

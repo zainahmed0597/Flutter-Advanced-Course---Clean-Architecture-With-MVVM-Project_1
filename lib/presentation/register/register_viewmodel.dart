@@ -39,25 +39,24 @@ class RegisterViewModel extends BaseViewModel
   register() async {
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-    (await _registerUseCase.execute(
-            RegisterUseCaseInput(
-                registerViewObject.mobileNumber,
-                registerViewObject.countryMobileCode,
-                registerViewObject.userName,
-                registerViewObject.email,
-                registerViewObject.password,
-                registerViewObject.profilePicture,
-            )))
+    (await _registerUseCase.execute(RegisterUseCaseInput(
+      registerViewObject.mobileNumber,
+      registerViewObject.countryMobileCode,
+      registerViewObject.userName,
+      registerViewObject.email,
+      registerViewObject.password,
+      registerViewObject.profilePicture,
+    )))
         .fold(
             (failure) => {
-                  // left -> failure
-                  inputState.add(ErrorState(
-                      StateRendererType.POPUP_ERROR_STATE, failure.message))
-                }, (data) {
+          // left -> failure
+          inputState.add(ErrorState(
+              StateRendererType.POPUP_ERROR_STATE, failure.message))
+        }, (data) {
       // right -> success (data)
       inputState.add(ContentState());
-      // navigate to main screen after the register
-      // isUserLoggedInSuccessFullyStreamController.add(true);
+
+      // navigate to main screen after the login
     });
   }
 

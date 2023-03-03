@@ -82,6 +82,7 @@ class _AppServiceClient implements AppServiceClient {
     userName,
     email,
     password,
+    mobilNumber,
     profilePicture,
   ) async {
     const _extra = <String, dynamic>{};
@@ -92,6 +93,7 @@ class _AppServiceClient implements AppServiceClient {
       'user_name': userName,
       'email': email,
       'password': password,
+      'mobile_number': mobilNumber,
       'profile_picture': profilePicture,
     };
     final _result = await _dio.fetch<Map<String, dynamic>>(
