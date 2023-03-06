@@ -7,9 +7,11 @@ import 'package:project_1/data/network/app_api.dart';
 import 'package:project_1/data/network/dio_factory.dart';
 import 'package:project_1/data/repository/repository_impl.dart';
 import 'package:project_1/domain/repository/repository.dart';
+import 'package:project_1/domain/usecase/home_usecase.dart';
 import 'package:project_1/domain/usecase/login_usecase.dart';
 import 'package:project_1/domain/usecase/register_usecase.dart';
 import 'package:project_1/presentation/login/login_viewmodel.dart';
+import 'package:project_1/presentation/main/home/home_viewmodel.dart';
 import 'package:project_1/presentation/register/register_viewmodel.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../data/network/network_info.dart';
@@ -30,7 +32,7 @@ Future<void> initAppModule() async {
 
   // network info
   instance.registerLazySingleton<NetworkInfo>(
-          () => NetworkInfoImpl(DataConnectionChecker()));
+      () => NetworkInfoImpl(DataConnectionChecker()));
 
   // dio factory
   instance.registerLazySingleton<DioFactory>(() => DioFactory(instance()));
@@ -41,11 +43,11 @@ Future<void> initAppModule() async {
 
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
-          () => RemoteDataSourceImplementer(instance()));
+      () => RemoteDataSourceImplementer(instance()));
 
   // repository
   instance.registerLazySingleton<Repository>(
-          () => RepositoryImpl(instance(), instance()));
+      () => RepositoryImpl(instance(), instance()));
 }
 
 initLoginModule() {
@@ -58,9 +60,9 @@ initLoginModule() {
 initForgotPasswordModule() {
   if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
     instance.registerFactory<ForgotPasswordUseCase>(
-            () => ForgotPasswordUseCase(instance()));
+        () => ForgotPasswordUseCase(instance()));
     instance.registerFactory<ForgotPasswordViewModel>(
-            () => ForgotPasswordViewModel(instance()));
+        () => ForgotPasswordViewModel(instance()));
   }
 }
 
@@ -69,7 +71,14 @@ initRegisterModule() {
     instance
         .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
     instance.registerFactory<RegisterViewModel>(
-            () => RegisterViewModel(instance()));
+        () => RegisterViewModel(instance()));
     instance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
   }
 }

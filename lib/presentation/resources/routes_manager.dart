@@ -17,7 +17,7 @@ class Routes {
   static const String registerRoute = '/register';
   static const String forgetPasswordRoute = '/forgetPassword';
   static const String mainRoute = '/main';
-  static const String storeDetailRoute = '/storeDetails';
+  static const String storeDetailsRoute = '/storeDetails';
 }
 
 class RouteGenerator {
@@ -37,8 +37,9 @@ class RouteGenerator {
         initForgotPasswordModule();
         return MaterialPageRoute(builder: (_) => ForgetPasswordView());
       case Routes.mainRoute:
+        initHomeModule();
         return MaterialPageRoute(builder: (_) => MainView());
-      case Routes.storeDetailRoute:
+      case Routes.storeDetailsRoute:
         return MaterialPageRoute(builder: (_) => StoreDetailsView());
       default:
         return unDefinedRoute();

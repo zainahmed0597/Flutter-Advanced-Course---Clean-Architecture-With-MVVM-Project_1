@@ -4,7 +4,6 @@ import 'package:project_1/presentation/resources/font_manager.dart';
 import 'package:project_1/presentation/resources/styles_manager.dart';
 import 'package:project_1/presentation/resources/values_manager.dart';
 
-
 ThemeData getApplicationTheme() {
   return ThemeData(
     // Main color of the app
@@ -43,7 +42,9 @@ ThemeData getApplicationTheme() {
     // elevated button theme
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        textStyle: getRegularStyle(color: ColorManager.white,),
+        textStyle: getRegularStyle(
+          color: ColorManager.white,
+        ),
         backgroundColor: ColorManager.primary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(AppSize.s8),
@@ -53,10 +54,16 @@ ThemeData getApplicationTheme() {
 
     // Text theme
     textTheme: TextTheme(
-      displayLarge: getSemiBoldStyle(color: ColorManager.darkGrey, fontSize: FontSize.s16),
-      displayMedium: getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16),
-      titleMedium: getMediumStyle(color: ColorManager.lightGrey,fontSize: FontSize.s14),
-      titleSmall: getMediumStyle(color: ColorManager.primary,fontSize: FontSize.s14),
+      displayLarge: getSemiBoldStyle(
+          color: ColorManager.darkGrey, fontSize: FontSize.s16),
+      displayMedium:
+          getRegularStyle(color: ColorManager.white, fontSize: FontSize.s16),
+      displaySmall:
+          getRegularStyle(color: ColorManager.primary, fontSize: FontSize.s16),
+      titleMedium:
+          getMediumStyle(color: ColorManager.lightGrey, fontSize: FontSize.s14),
+      titleSmall:
+          getMediumStyle(color: ColorManager.primary, fontSize: FontSize.s14),
       bodySmall: getRegularStyle(color: ColorManager.grey1),
       bodyLarge: getRegularStyle(color: ColorManager.grey1),
     ),
@@ -87,7 +94,7 @@ ThemeData getApplicationTheme() {
       ),
 
       // disabled border
-     disabledBorder: OutlineInputBorder(
+      disabledBorder: OutlineInputBorder(
         borderSide: BorderSide(color: ColorManager.error, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
@@ -110,6 +117,8 @@ ThemeData getApplicationTheme() {
         borderSide: BorderSide(color: ColorManager.primary, width: AppSize.s1),
         borderRadius: const BorderRadius.all(Radius.circular(AppSize.s8)),
       ),
-    ), colorScheme: ColorScheme.fromSwatch().copyWith(secondary: ColorManager.grey),
+    ),
+    colorScheme:
+        ColorScheme.fromSwatch().copyWith(secondary: ColorManager.grey),
   );
 }
