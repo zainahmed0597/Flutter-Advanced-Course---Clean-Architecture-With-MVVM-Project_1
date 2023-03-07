@@ -8,9 +8,9 @@ import '../../app/functions.dart';
 class ForgotPasswordViewModel extends BaseViewModel
     with ForgotPasswordViewModelInput, ForgotPasswordViewModelOutput {
   final StreamController _emailStreamController =
-  StreamController<String>.broadcast();
+      StreamController<String>.broadcast();
   final StreamController _isAllInputValidStreamController =
-  StreamController<void>.broadcast();
+      StreamController<void>.broadcast();
 
   final ForgotPasswordUseCase _forgotPasswordUseCase;
 

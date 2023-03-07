@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/presentation/resources/color_manager.dart';
 import '../../app/di.dart';
@@ -7,14 +8,14 @@ import '../resources/strings_manager.dart';
 import '../resources/values_manager.dart';
 import 'forget_password_viewmodel.dart';
 
-class ForgetPasswordView extends StatefulWidget {
-  const ForgetPasswordView({Key? key}) : super(key: key);
+class ForgotPasswordView extends StatefulWidget {
+  const ForgotPasswordView({Key? key}) : super(key: key);
 
   @override
-  State<ForgetPasswordView> createState() => _ForgetPasswordViewState();
+  _ForgotPasswordViewState createState() => _ForgotPasswordViewState();
 }
 
-class _ForgetPasswordViewState extends State<ForgetPasswordView> {
+class _ForgotPasswordViewState extends State<ForgotPasswordView> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _emailTextEditingController =
       TextEditingController();
@@ -61,7 +62,9 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
           child: Column(
             children: [
               const Image(image: AssetImage(ImageAssets.splashLogo)),
-              const SizedBox(height: AppSize.s28),
+              const SizedBox(
+                height: AppSize.s28,
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -72,16 +75,18 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailTextEditingController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.emailHint,
-                          labelText: AppStrings.emailHint,
+                          hintText: AppStrings.emailHint.tr(),
+                          labelText: AppStrings.emailHint.tr(),
                           errorText: (snapshot.data ?? true)
                               ? null
-                              : AppStrings.invalidEmail),
+                              : AppStrings.invalidEmail.tr()),
                     );
                   },
                 ),
               ),
-              const SizedBox(height: AppSize.s24),
+              const SizedBox(
+                height: AppSize.s28,
+              ),
               Padding(
                 padding: const EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
@@ -90,39 +95,16 @@ class _ForgetPasswordViewState extends State<ForgetPasswordView> {
                   builder: (context, snapshot) {
                     return SizedBox(
                       width: double.infinity,
-                      height: AppSize.s45,
+                      height: AppSize.s40,
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false)
                               ? () => _viewModel.forgotPassword()
                               : null,
-                          child: const Text(AppStrings.resetPassword)),
+                          child: const Text(AppStrings.resetPassword).tr()),
                     );
                   },
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: AppPadding.p8,
-                  left: AppPadding.p28,
-                  right: AppPadding.p28,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    TextButton(
-                      onPressed: () {
-                        // Navigator.pushNamed(
-                        //     context, Routes.forgetPasswordRoute);
-                      },
-                      child: Text(
-                        AppStrings.resend_email,
-                        textAlign: TextAlign.end,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              )
             ],
           ),
         ),

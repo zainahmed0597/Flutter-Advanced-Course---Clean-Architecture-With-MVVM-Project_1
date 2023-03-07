@@ -2,7 +2,6 @@ import 'package:project_1/data/request/request.dart';
 import 'package:project_1/data/responses/responses.dart';
 import '../network/app_api.dart';
 
-
 abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);
 
@@ -11,6 +10,7 @@ abstract class RemoteDataSource {
   Future<ForgotPasswordResponse> forgotPassword(String email);
 
   Future<HomeResponse> getHome();
+
   Future<StoreDetailsResponse> getStoreDetails();
 }
 
@@ -43,7 +43,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<HomeResponse> getHome() async{
+  Future<HomeResponse> getHome() async {
     return await _appServiceClient.getHome();
   }
 

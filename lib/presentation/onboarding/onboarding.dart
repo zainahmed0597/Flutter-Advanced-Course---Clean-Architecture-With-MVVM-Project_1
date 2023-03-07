@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_1/presentation/onboarding/onbording_viewmodel.dart';
@@ -19,39 +20,34 @@ class OnBoardingView extends StatefulWidget {
 }
 
 class _OnBoardingViewState extends State<OnBoardingView> {
-
-  final PageController _pageController = PageController(initialPage: 0);
-
-  final OnBoardingViewModel _viewModel = OnBoardingViewModel();
+  PageController _pageController = PageController(initialPage: 0);
+  OnBoardingViewModel _viewModel = OnBoardingViewModel();
   AppPreferences _appPreferences = instance<AppPreferences>();
 
-
-  _bine() {
+  _bind() {
     _appPreferences.setOnBoardingScreenViewed();
     _viewModel.start();
   }
 
   @override
   void initState() {
-    _bine();
+    _bind();
     super.initState();
   }
-
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<SliderViewObject>(
         stream: _viewModel.outputSliderViewObject,
         builder: (context, snapShot) {
-          return _getContentWidet(snapShot.data);
-        }
-    );
+          return _getContentWidget(snapShot.data);
+        });
   }
 
-  Widget _getContentWidet(SliderViewObject? sliderViewObject) {
+  Widget _getContentWidget(SliderViewObject? sliderViewObject) {
     if (sliderViewObject == null) {
       return Container();
-    } else {
+    } else
       return Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
@@ -76,7 +72,6 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           color: ColorManager.white,
           height: AppSize.s100,
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.end,// to remove bottom white space
             children: [
               Align(
                   alignment: Alignment.centerRight,
@@ -87,20 +82,16 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                     },
                     child: Text(
                       AppStrings.skip,
+                      style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.end,
-                      style: Theme
-                          .of(context)
-                          .textTheme
-                          .titleSmall,
-                    ),
-                  ),),
+                    ).tr(),
+                  )),
               // add layout for indicator and arrows
               _getBottomSheetWidget(sliderViewObject)
             ],
           ),
         ),
       );
-    }
   }
 
   Widget _getBottomSheetWidget(SliderViewObject sliderViewObject) {
@@ -111,21 +102,17 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         children: [
           // left arrow
           Padding(
-            padding: const EdgeInsets.all(AppPadding.p14),
+            padding: EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
               child: SizedBox(
                 height: AppSize.s20,
                 width: AppSize.s20,
-                child: Icon(
-                  Icons.arrow_back_ios_sharp,
-                  color: ColorManager.white,
-                ), //SvgPicture.asset(ImageAssets.leftArrowIc),
+                child: SvgPicture.asset(ImageAssets.leftArrowIc),
               ),
               onTap: () {
                 // go to previous slide
                 _pageController.animateToPage(_viewModel.goPrevious(),
-                    duration:
-                    const Duration(milliseconds: DurationConstant.d300),
+                    duration: Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
               },
             ),
@@ -136,30 +123,25 @@ class _OnBoardingViewState extends State<OnBoardingView> {
             children: [
               for (int i = 0; i < sliderViewObject.numOfSlides; i++)
                 Padding(
-                  padding: const EdgeInsets.all(AppPadding.p8),
+                  padding: EdgeInsets.all(AppPadding.p8),
                   child: _getProperCircle(i, sliderViewObject.currentIndex),
-                ),
+                )
             ],
           ),
 
           // right arrow
           Padding(
-            padding: const EdgeInsets.all(AppPadding.p14),
+            padding: EdgeInsets.all(AppPadding.p14),
             child: GestureDetector(
               child: SizedBox(
                 height: AppSize.s20,
                 width: AppSize.s20,
-                child: Icon(
-                  Icons.arrow_forward_ios_sharp,
-                  color: ColorManager.white,
-                ),
-                // child: SvgPicture.asset(ImageAssets.rightArrowIc),
+                child: SvgPicture.asset(ImageAssets.rightarrowIc),
               ),
               onTap: () {
                 // go to next slide
                 _pageController.animateToPage(_viewModel.goNext(),
-                    duration:
-                    const Duration(milliseconds: DurationConstant.d300),
+                    duration: Duration(milliseconds: DurationConstant.d300),
                     curve: Curves.bounceInOut);
               },
             ),
@@ -169,8 +151,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     );
   }
 
-  Widget _getProperCircle(int index, int currentIndex) {
-    if (index == currentIndex) {
+  Widget _getProperCircle(int index, int _currentIndex) {
+    if (index == _currentIndex) {
       return SvgPicture.asset(ImageAssets.hollowCircleIc); // selected slider
     } else {
       return SvgPicture.asset(ImageAssets.solidCircleIc); // unselected slider
@@ -185,25 +167,22 @@ class _OnBoardingViewState extends State<OnBoardingView> {
 }
 
 class OnBoardingPage extends StatelessWidget {
-  final SliderObject _sliderObject;
+  SliderObject _sliderObject;
 
-  const OnBoardingPage(this._sliderObject, {Key? key}) : super(key: key);
+  OnBoardingPage(this._sliderObject, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        const SizedBox(height: AppSize.s40),
+        SizedBox(height: AppSize.s40),
         Padding(
           padding: const EdgeInsets.all(AppPadding.p8),
           child: Text(
             _sliderObject.title,
             textAlign: TextAlign.center,
-            style: Theme
-                .of(context)
-                .textTheme
-                .displayLarge,
+            style: Theme.of(context).textTheme.displayLarge,
           ),
         ),
         Padding(
@@ -211,13 +190,10 @@ class OnBoardingPage extends StatelessWidget {
           child: Text(
             _sliderObject.subTitle,
             textAlign: TextAlign.center,
-            style: Theme
-                .of(context)
-                .textTheme
-                .titleMedium,
+            style: Theme.of(context).textTheme.titleMedium,
           ),
         ),
-        const SizedBox(
+        SizedBox(
           height: AppSize.s60,
         ),
         SvgPicture.asset(_sliderObject.image)
@@ -226,4 +202,3 @@ class OnBoardingPage extends StatelessWidget {
     );
   }
 }
-

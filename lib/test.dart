@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_1/app/app.dart';
 
 class Test extends StatelessWidget {
-  const Test({super.key});
+  const Test({Key? key}) : super(key: key);
 
   void updateAppState() {
     MyApp.instance.appState = 10;

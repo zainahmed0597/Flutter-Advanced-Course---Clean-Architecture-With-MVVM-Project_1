@@ -5,8 +5,6 @@ import 'package:project_1/domain/model/model.dart';
 import 'package:project_1/domain/repository/repository.dart';
 import 'package:project_1/domain/usecase/base_usecase.dart';
 
-import '../../app/functions.dart';
-
 class RegisterUseCase
     implements BaseUseCase<RegisterUseCaseInput, Authentication> {
   Repository _repository;

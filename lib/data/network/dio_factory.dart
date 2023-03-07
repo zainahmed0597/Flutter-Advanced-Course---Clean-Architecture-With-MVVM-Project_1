@@ -4,7 +4,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:project_1/app/app_prefs.dart';
 import 'package:project_1/app/constant.dart';
 
-
 const String APPLICATION_JSON = "application/json";
 const String CONTENT_TYPE = "content-type";
 const String ACCEPT = "accept";

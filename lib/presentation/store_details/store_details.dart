@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/presentation/store_details/store_details_viewmodel.dart';
 
@@ -12,7 +13,7 @@ class StoreDetailsView extends StatefulWidget {
   const StoreDetailsView({Key? key}) : super(key: key);
 
   @override
-  State<StoreDetailsView> createState() => _StoreDetailsViewState();
+  _StoreDetailsViewState createState() => _StoreDetailsViewState();
 }
 
 class _StoreDetailsViewState extends State<StoreDetailsView> {
@@ -27,28 +28,29 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
   bind() {
     _viewModel.start();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: StreamBuilder<FlowState>(
-          stream: _viewModel.outputState,
-          builder: (context, snapshot) {
-            return Scaffold(
-              body:
+      stream: _viewModel.outputState,
+      builder: (context, snapshot) {
+        return Scaffold(
+          body:
               snapshot.data?.getScreenWidget(context, _getContentWidget(), () {
-                _viewModel.start();
-              }) ??
+                    _viewModel.start();
+                  }) ??
                   Container(),
-            );
-          },
-        ));
+        );
+      },
+    ));
   }
 
   Widget _getContentWidget() {
     return Scaffold(
         backgroundColor: ColorManager.white,
         appBar: AppBar(
-          title: Text(AppStrings.storeDetails),
+          title: Text(AppStrings.storeDetails.tr()),
           elevation: AppSize.s0,
           iconTheme: IconThemeData(
             //back button
@@ -78,16 +80,16 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
         children: [
           Center(
               child: Image.network(
-                storeDetails.image,
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: 250,
-              )),
-          _getSection(AppStrings.details),
+            storeDetails.image,
+            fit: BoxFit.cover,
+            width: double.infinity,
+            height: 250,
+          )),
+          _getSection(AppStrings.details.tr()),
           _getInfoText(storeDetails.details),
-          _getSection(AppStrings.services),
+          _getSection(AppStrings.services.tr()),
           _getInfoText(storeDetails.services),
-          _getSection(AppStrings.about),
+          _getSection(AppStrings.about.tr()),
           _getInfoText(storeDetails.about)
         ],
       );

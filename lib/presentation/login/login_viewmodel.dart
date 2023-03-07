@@ -7,16 +7,17 @@ import '../../domain/usecase/login_usecase.dart';
 import '../common/freezed_data_classes.dart';
 
 class LoginViewModel extends BaseViewModel
-    with LoginViewModelInputs, LoginViewModelOutput {
+    with LoginViewModelInputs, LoginViewModelOutputs {
   StreamController _userNameStreamController =
-  StreamController<String>.broadcast();
+      StreamController<String>.broadcast();
   StreamController _passwordStreamController =
-  StreamController<String>.broadcast();
-  StreamController _isAllInputsValidStreamController =
-  StreamController<void>.broadcast();
-  StreamController isUserLoggedInSuccessFullyStreamController = StreamController<
-      bool>();
+      StreamController<String>.broadcast();
 
+  StreamController _isAllInputsValidStreamController =
+      StreamController<void>.broadcast();
+
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   var loginObject = LoginObject("", "");
 
@@ -24,18 +25,18 @@ class LoginViewModel extends BaseViewModel
 
   LoginViewModel(this._loginUseCase);
 
-  @override
   // inputs
+  @override
   void dispose() {
     _userNameStreamController.close();
-    _passwordStreamController.close();
     _isAllInputsValidStreamController.close();
-    isUserLoggedInSuccessFullyStreamController.close();
+    _passwordStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
   }
 
   @override
   void start() {
-    // view tell state renderer, please show the content of the screen
+    // view tells state renderer, please show the content of the screen
     inputState.add(ContentState());
   }
 
@@ -53,20 +54,19 @@ class LoginViewModel extends BaseViewModel
     inputState.add(
         LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
-        LoginUseCaseInput(loginObject.userName, loginObject.password)))
+            LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
-            (failure) =>
-        {
-          // left -> failure
-          inputState.add(ErrorState(
-              StateRendererType.POPUP_ERROR_STATE, failure.message))
-        },
-            (data) {
-          // right -> success (data)
-          inputState.add(ContentState());
-          // navigate to main screen after the login
-          isUserLoggedInSuccessFullyStreamController.add(true);
-        });
+            (failure) => {
+                  // left -> failure
+                  inputState.add(ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE, failure.message))
+                }, (data) {
+      // right -> success (data)
+      inputState.add(ContentState());
+
+      // navigate to main screen after the login
+      isUserLoggedInSuccessfullyStreamController.add(true);
+    });
   }
 
   @override
@@ -87,14 +87,12 @@ class LoginViewModel extends BaseViewModel
 
   // outputs
   @override
-  Stream<bool> get outputIsPasswordValid =>
-      _passwordStreamController.stream
-          .map((password) => _isPasswordValid(password));
+  Stream<bool> get outputIsPasswordValid => _passwordStreamController.stream
+      .map((password) => _isPasswordValid(password));
 
   @override
-  Stream<bool> get outputIsUserNameValid =>
-      _userNameStreamController.stream
-          .map((userName) => _isUserNameValid(userName));
+  Stream<bool> get outputIsUserNameValid => _userNameStreamController.stream
+      .map((userName) => _isUserNameValid(userName));
 
   @override
   Stream<bool> get outputIsAllInputsValid =>
@@ -121,14 +119,14 @@ class LoginViewModel extends BaseViewModel
 }
 
 abstract class LoginViewModelInputs {
-  // three function for actions
+  // three functions for actions
   setUserName(String userName);
 
   setPassword(String password);
 
   login();
 
-  // two sinks for streams
+// two sinks for streams
   Sink get inputUserName;
 
   Sink get inputPassword;
@@ -136,7 +134,7 @@ abstract class LoginViewModelInputs {
   Sink get inputIsAllInputValid;
 }
 
-abstract class LoginViewModelOutput {
+abstract class LoginViewModelOutputs {
   Stream<bool> get outputIsUserNameValid;
 
   Stream<bool> get outputIsPasswordValid;

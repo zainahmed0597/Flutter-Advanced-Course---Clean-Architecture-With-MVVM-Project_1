@@ -30,8 +30,7 @@ Future<void> initAppModule() async {
   instance.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
 
   // app prefs instance
-  instance
-      .registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
+  instance.registerLazySingleton<AppPreferences>(() => AppPreferences(instance()));
 
   // network info
   instance.registerLazySingleton<NetworkInfo>(
@@ -50,11 +49,11 @@ Future<void> initAppModule() async {
 
   // local data source
   instance.registerLazySingleton<LocalDataSource>(
-          () => LocalDataSourceImplementer());
+      () => LocalDataSourceImplementer());
 
   // repository
   instance.registerLazySingleton<Repository>(
-      () => RepositoryImpl(instance(), instance() ,instance()));
+      () => RepositoryImpl(instance(), instance(), instance()));
 }
 
 initLoginModule() {
@@ -66,19 +65,15 @@ initLoginModule() {
 
 initForgotPasswordModule() {
   if (!GetIt.I.isRegistered<ForgotPasswordUseCase>()) {
-    instance.registerFactory<ForgotPasswordUseCase>(
-        () => ForgotPasswordUseCase(instance()));
-    instance.registerFactory<ForgotPasswordViewModel>(
-        () => ForgotPasswordViewModel(instance()));
+    instance.registerFactory<ForgotPasswordUseCase>(() => ForgotPasswordUseCase(instance()));
+    instance.registerFactory<ForgotPasswordViewModel>(() => ForgotPasswordViewModel(instance()));
   }
 }
 
 initRegisterModule() {
   if (!GetIt.I.isRegistered<RegisterUseCase>()) {
-    instance
-        .registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
-    instance.registerFactory<RegisterViewModel>(
-        () => RegisterViewModel(instance()));
+    instance.registerFactory<RegisterUseCase>(() => RegisterUseCase(instance()));
+    instance.registerFactory<RegisterViewModel>(() => RegisterViewModel(instance()));
     instance.registerFactory<ImagePicker>(() => ImagePicker());
   }
 }
@@ -92,9 +87,7 @@ initHomeModule() {
 
 initStoreDetailsModule() {
   if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
-    instance.registerFactory<StoreDetailsUseCase>(
-            () => StoreDetailsUseCase(instance()));
-    instance.registerFactory<StoreDetailsViewModel>(
-            () => StoreDetailsViewModel(instance()));
+    instance.registerFactory<StoreDetailsUseCase>(() => StoreDetailsUseCase(instance()));
+    instance.registerFactory<StoreDetailsViewModel>(() => StoreDetailsViewModel(instance()));
   }
 }

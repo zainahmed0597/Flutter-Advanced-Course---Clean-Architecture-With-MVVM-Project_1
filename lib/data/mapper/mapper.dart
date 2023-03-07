@@ -1,9 +1,5 @@
-
 // to convert the response into a non nullable object (model)
-
-
 import 'package:project_1/app/extensions.dart';
-
 import '../../domain/model/model.dart';
 import '../responses/responses.dart';
 
@@ -60,22 +56,27 @@ extension BannerResponseMapper on BannerResponse? {
   }
 }
 
-extension HomeResponseMapper on HomeResponse?{
+extension HomeResponseMapper on HomeResponse? {
+  HomeObject toDomain() {
+    List<Service> mappedServices =
+        (this?.data?.services?.map((service) => service.toDomain()) ??
+                Iterable.empty())
+            .cast<Service>()
+            .toList();
 
-  HomeObject toDomain(){
-    List<Service> mappedServices =  (this?.data?.services?.map((service) => service.toDomain()) ??
-        Iterable.empty()).cast<Service>().toList();
+    List<Store> mappedStores =
+        (this?.data?.stores?.map((store) => store.toDomain()) ??
+                Iterable.empty())
+            .cast<Store>()
+            .toList();
 
-    List<Store> mappedStore = (this?.data?.stores?.map((store) => store.toDomain()) ??
-        Iterable.empty())
-        .cast<Store>()
-        .toList();
-    List<BannerAd> mappedBannerAd = (this?.data?.banners?.map((bannerAd) => bannerAd.toDomain()) ??
-        Iterable.empty())
-        .cast<BannerAd>()
-        .toList();
+    List<BannerAd> mappedBanners =
+        (this?.data?.banners?.map((bannerAd) => bannerAd.toDomain()) ??
+                Iterable.empty())
+            .cast<BannerAd>()
+            .toList();
 
-    var data = HomeData(mappedServices, mappedStore, mappedBannerAd);
+    var data = HomeData(mappedServices, mappedStores, mappedBanners);
     return HomeObject(data);
   }
 }

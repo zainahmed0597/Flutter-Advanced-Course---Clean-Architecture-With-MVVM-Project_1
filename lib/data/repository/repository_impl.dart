@@ -26,7 +26,7 @@ class RepositoryImpl extends Repository {
         final response = await _remoteDataSource.login(loginRequest);
 
         if (response.status == ApiInternalStatus.SUCCESS) // success
-            {
+        {
           // return data (success)
           // return right
           return Right(response.toDomain());
@@ -81,7 +81,7 @@ class RepositoryImpl extends Repository {
         final response = await _remoteDataSource.register(registerRequest);
 
         if (response.status == ApiInternalStatus.SUCCESS) // success
-            {
+        {
           // return data (success)
           // return right
           return Right(response.toDomain());
@@ -115,7 +115,7 @@ class RepositoryImpl extends Repository {
           final response = await _remoteDataSource.getHome();
 
           if (response.status == ApiInternalStatus.SUCCESS) // success
-              {
+          {
             // return data (success)
             // return right
             // save response to local data source

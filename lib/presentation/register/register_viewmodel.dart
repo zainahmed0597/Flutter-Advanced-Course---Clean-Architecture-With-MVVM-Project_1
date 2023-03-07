@@ -13,28 +13,32 @@ class RegisterViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   StreamController _mobileNumberStreamController =
       StreamController<String>.broadcast();
+
   StreamController _emailStreamController =
       StreamController<String>.broadcast();
+
   StreamController _passwordStreamController =
       StreamController<String>.broadcast();
+
   StreamController _profilePictureStreamController =
       StreamController<File>.broadcast();
+
   StreamController _isAllInputsValidStreamController =
       StreamController<void>.broadcast();
-  StreamController isUserLoggedInSuccessFullyStreamController = StreamController<
-      bool>();
 
+  StreamController isUserLoggedInSuccessfullyStreamController =
+      StreamController<bool>();
 
   RegisterUseCase _registerUseCase;
 
-  var registerViewObject = RegisterObject('', '', '', '', '', '');
+  var registerViewObject = RegisterObject("", "", "", "", "", "");
 
   RegisterViewModel(this._registerUseCase);
 
-  // -- Inputs
+  //  -- inputs
   @override
   void start() {
-    // view tell state renderer, please show the content of the screen
+    // view tells state renderer, please show the content of the screen
     inputState.add(ContentState());
   }
 
@@ -52,15 +56,15 @@ class RegisterViewModel extends BaseViewModel
     )))
         .fold(
             (failure) => {
-          // left -> failure
-          inputState.add(ErrorState(
-              StateRendererType.POPUP_ERROR_STATE, failure.message))
-        }, (data) {
+                  // left -> failure
+                  inputState.add(ErrorState(
+                      StateRendererType.POPUP_ERROR_STATE, failure.message))
+                }, (data) {
       // right -> success (data)
       inputState.add(ContentState());
 
       // navigate to main screen after the login
-      isUserLoggedInSuccessFullyStreamController.add(true);
+      isUserLoggedInSuccessfullyStreamController.add(true);
     });
   }
 
@@ -72,7 +76,7 @@ class RegisterViewModel extends BaseViewModel
     _emailStreamController.close();
     _passwordStreamController.close();
     _profilePictureStreamController.close();
-    isUserLoggedInSuccessFullyStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
     super.dispose();
   }
 
@@ -119,7 +123,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   setPassword(String password) {
-    inputPassword.add(password);
+    inputUPassword.add(password);
     if (_isPasswordValid(password)) {
       // update register view object with password value
       registerViewObject = registerViewObject.copyWith(
@@ -166,10 +170,10 @@ class RegisterViewModel extends BaseViewModel
   Sink get inputMobileNumber => _mobileNumberStreamController.sink;
 
   @override
-  Sink get inputPassword => _passwordStreamController.sink;
+  Sink get inputProfilePicture => _profilePictureStreamController.sink;
 
   @override
-  Sink get inputProfilePicture => _profilePictureStreamController.sink;
+  Sink get inputUPassword => _passwordStreamController.sink;
 
   @override
   Sink get inputUserName => _userNameStreamController.sink;
@@ -177,7 +181,7 @@ class RegisterViewModel extends BaseViewModel
   @override
   Sink get inputAllInputsValid => _isAllInputsValidStreamController.sink;
 
-  // -- Outputs
+  // -- outputs
 
   @override
   Stream<bool> get outputIsAllInputsValid =>
@@ -189,7 +193,7 @@ class RegisterViewModel extends BaseViewModel
 
   @override
   Stream<String?> get outputErrorUserName => outputIsUserNameValid
-      .map((isUserNameValid) => isUserNameValid ? null : "Invalid Username");
+      .map((isUserNameValid) => isUserNameValid ? null : "Invalid username");
 
   @override
   Stream<bool> get outputIsEmailValid =>
@@ -218,11 +222,10 @@ class RegisterViewModel extends BaseViewModel
       .map((isPasswordValid) => isPasswordValid ? null : "Invalid Password");
 
   @override
-  Stream<File> get outputProfilePicture =>
+  Stream<File?> get outputProfilePicture =>
       _profilePictureStreamController.stream.map((file) => file);
 
-  // -- Private Methods
-
+  // -- private methods
   bool _isUserNameValid(String userName) {
     return userName.length >= 8;
   }
@@ -270,7 +273,7 @@ abstract class RegisterViewModelInput {
 
   Sink get inputEmail;
 
-  Sink get inputPassword;
+  Sink get inputUPassword;
 
   Sink get inputProfilePicture;
 

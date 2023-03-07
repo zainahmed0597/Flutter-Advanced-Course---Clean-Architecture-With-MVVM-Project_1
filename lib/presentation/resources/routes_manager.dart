@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:project_1/presentation/forget_password/forget_password.dart';
 import 'package:project_1/presentation/login/login.dart';
@@ -11,13 +12,13 @@ import 'package:project_1/presentation/store_details/store_details.dart';
 import '../../app/di.dart';
 
 class Routes {
-  static const String splashRoute = '/';
-  static const String onBoardingRoute = '/onBoarding';
-  static const String loginRoute = '/login';
-  static const String registerRoute = '/register';
-  static const String forgetPasswordRoute = '/forgetPassword';
-  static const String mainRoute = '/main';
-  static const String storeDetailsRoute = '/storeDetails';
+  static const String splashRoute = "/";
+  static const String onBoardingRoute = "/onBoarding";
+  static const String loginRoute = "/login";
+  static const String registerRoute = "/register";
+  static const String forgotPasswordRoute = "/forgotPassword";
+  static const String mainRoute = "/main";
+  static const String storeDetailsRoute = "/storeDetails";
 }
 
 class RouteGenerator {
@@ -25,17 +26,17 @@ class RouteGenerator {
     switch (routeSettings.name) {
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_) => SplashView());
-      case Routes.onBoardingRoute:
-        return MaterialPageRoute(builder: (_) => OnBoardingView());
       case Routes.loginRoute:
         initLoginModule();
         return MaterialPageRoute(builder: (_) => LoginView());
+      case Routes.onBoardingRoute:
+        return MaterialPageRoute(builder: (_) => OnBoardingView());
       case Routes.registerRoute:
         initRegisterModule();
         return MaterialPageRoute(builder: (_) => RegisterView());
-      case Routes.forgetPasswordRoute:
+      case Routes.forgotPasswordRoute:
         initForgotPasswordModule();
-        return MaterialPageRoute(builder: (_) => ForgetPasswordView());
+        return MaterialPageRoute(builder: (_) => ForgotPasswordView());
       case Routes.mainRoute:
         initHomeModule();
         return MaterialPageRoute(builder: (_) => MainView());
@@ -49,14 +50,11 @@ class RouteGenerator {
 
   static Route<dynamic> unDefinedRoute() {
     return MaterialPageRoute(
-      builder: (_) => Scaffold(
-        appBar: AppBar(
-          title: const Text(AppStrings.noRouteFound),
-        ),
-        body: const Center(
-          child: Text(AppStrings.noRouteFound),
-        ),
-      ),
-    );
+        builder: (_) => Scaffold(
+          appBar: AppBar(
+            title: Text(AppStrings.noRouteFound).tr(),
+          ),
+          body: Center(child: Text(AppStrings.noRouteFound).tr()),
+        ));
   }
 }

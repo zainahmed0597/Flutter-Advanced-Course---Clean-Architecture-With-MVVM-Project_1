@@ -1,12 +1,11 @@
 import 'package:project_1/data/network/error_handler.dart';
-
 import '../responses/responses.dart';
 
 const CACHE_HOME_KEY = "CACHE_HOME_KEY";
-const CACHE_HOME_INTERVAL = 60 * 1000; // 1 minute in milliseconds
+const CACHE_HOME_INTERVAL = 60 * 1000; // 1 MINUTE IN MILLIS
+
 const CACHE_STORE_DETAILS_KEY = "CACHE_STORE_DETAILS_KEY";
 const CACHE_STORE_DETAILS_INTERVAL = 60 * 1000; // 30s in millis
-
 
 abstract class LocalDataSource {
   Future<HomeResponse> getHome();
@@ -29,12 +28,13 @@ class LocalDataSourceImplementer implements LocalDataSource {
   @override
   Future<HomeResponse> getHome() async {
     CachedItem? cachedItem = cacheMap[CACHE_HOME_KEY];
+
     if (cachedItem != null && cachedItem.isValid(CACHE_HOME_INTERVAL)) {
       return cachedItem.data;
       // return the response from cache
     } else {
+      // return error that cache is not valid
       throw ErrorHandler.handle(DataSource.CACHE_ERROR);
-      // return error that cache is valid
     }
   }
 
@@ -79,16 +79,16 @@ class CachedItem {
   CachedItem(this.data);
 }
 
-extension CacheItemExtension on CachedItem {
-  // expirationTime is 60 sec
+extension CachedItemExtension on CachedItem {
   bool isValid(int expirationTime) {
+    // expirationTime is 60 secs
     int currentTimeInMillis =
-        DateTime.now().millisecondsSinceEpoch; // time is 1:00:00 pm
+        DateTime.now().millisecondsSinceEpoch; // time now is 1:00:00 pm
 
     bool isCacheValid = currentTimeInMillis - expirationTime <
-        cacheTime; // cache time was in 12:59:30 pm
-    // false if current time > 1:00:30 pm
-    // true if current time < 1:00:30 pm
+        cacheTime; // cache time was in 12:59:30
+    // false if current time > 1:00:30
+    // true if current time <1:00:30
     return isCacheValid;
   }
 }

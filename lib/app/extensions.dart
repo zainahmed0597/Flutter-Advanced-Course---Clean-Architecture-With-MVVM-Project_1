@@ -23,3 +23,4 @@ extension NonNullInteger on int? {
     }
   }
 }
+

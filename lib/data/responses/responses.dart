@@ -174,7 +174,7 @@ class HomeResponse extends BaseResponse {
 }
 
 @JsonSerializable()
-class StoreDetailsResponse extends BaseResponse{
+class StoreDetailsResponse extends BaseResponse {
   @JsonKey(name: 'id')
   int? id;
   @JsonKey(name: 'title')
@@ -188,7 +188,8 @@ class StoreDetailsResponse extends BaseResponse{
   @JsonKey(name: 'about')
   String? about;
 
-  StoreDetailsResponse(this.id, this.title, this.image,this.details, this.services, this.about);
+  StoreDetailsResponse(
+      this.id, this.title, this.image, this.details, this.services, this.about);
 
   factory StoreDetailsResponse.fromJson(Map<String, dynamic> json) =>
       _$StoreDetailsResponseFromJson(json);

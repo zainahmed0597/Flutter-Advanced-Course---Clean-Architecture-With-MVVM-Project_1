@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -44,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
     super.initState();
   }
 
-  _bind() {
+    _bind() {
     _viewModel.start();
     _userNameTextEditingController.addListener(() {
       _viewModel.setUserName(_userNameTextEditingController.text);
@@ -58,7 +59,7 @@ class _RegisterViewState extends State<RegisterView> {
     _PasswordTextEditingController.addListener(() {
       _viewModel.setPassword(_PasswordTextEditingController.text);
     });
-    _viewModel.isUserLoggedInSuccessFullyStreamController.stream
+    _viewModel.isUserLoggedInSuccessfullyStreamController.stream
         .listen((isSuccessLoggedIn) {
       // navigate to main screen
       SchedulerBinding.instance?.addPostFrameCallback((_) {
@@ -119,8 +120,8 @@ class _RegisterViewState extends State<RegisterView> {
                       keyboardType: TextInputType.text,
                       controller: _userNameTextEditingController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.name,
-                          labelText: AppStrings.name,
+                          hintText: AppStrings.username,
+                          labelText: AppStrings.username,
                           errorText: (snapshot.data)),
                     );
                   },
@@ -140,8 +141,8 @@ class _RegisterViewState extends State<RegisterView> {
                         textInputAction: TextInputAction.done,
                         maxLines: 1,
                         decoration: InputDecoration(
-                          hintText: AppStrings.mobile_number,
-                          labelText: AppStrings.mobile_number,
+                          hintText: AppStrings.mobileNumber.tr(),
+                          labelText: AppStrings.mobileNumber.tr(),
                           errorText: (snapshot.data),
                           prefixIcon: Container(
                             padding: const EdgeInsets.all(AppSize.s6),
@@ -157,7 +158,8 @@ class _RegisterViewState extends State<RegisterView> {
                                       countryCodeSelected = code;
                                       // update view model with selected code
                                       _viewModel.setCountryCode(
-                                          countryCodeSelected!.dialCode.toString());
+                                          countryCodeSelected!.dialCode
+                                              .toString());
                                     });
                                   },
                                   child: Row(
@@ -258,8 +260,11 @@ class _RegisterViewState extends State<RegisterView> {
                       height: AppSize.s45,
                       child: ElevatedButton(
                           onPressed: (snapshot.data ?? false)
-                              ? () {_viewModel.register();} : null,
-                          child: Text(AppStrings.register)),
+                              ? () {
+                                  _viewModel.register();
+                                }
+                              : null,
+                          child: Text(AppStrings.register.tr())),
                     );
                   },
                 ),
@@ -276,7 +281,7 @@ class _RegisterViewState extends State<RegisterView> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    AppStrings.haveAccount,
+                    AppStrings.haveAccount.tr(),
                     textAlign: TextAlign.end,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
@@ -319,7 +324,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ListTile(
                   trailing: Icon(Icons.arrow_forward),
                   leading: Icon(Icons.camera),
-                  title: Text(AppStrings.photoGallery),
+                  title: Text(AppStrings.photoGalley.tr()),
                   onTap: () {
                     _imageFromGallery();
                     Navigator.of(context).pop();
@@ -328,7 +333,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ListTile(
                   trailing: Icon(Icons.arrow_forward),
                   leading: Icon(Icons.camera_alt_rounded),
-                  title: Text(AppStrings.photoCamera),
+                  title: Text(AppStrings.photoCamera.tr()),
                   onTap: () {
                     _imageFromCamera();
                     Navigator.of(context).pop();
@@ -356,9 +361,9 @@ class _RegisterViewState extends State<RegisterView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(child: Text(AppStrings.profilePicture)),
+          Flexible(child: Text(AppStrings.profilePicture.tr())),
           Flexible(
-            child: StreamBuilder<File>(
+            child: StreamBuilder<File?>(
               stream: _viewModel.outputProfilePicture,
               builder: (context, snapshot) {
                 return _imagePickedByUser(snapshot.data);
