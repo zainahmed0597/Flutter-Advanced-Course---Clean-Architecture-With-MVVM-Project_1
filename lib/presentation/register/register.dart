@@ -45,7 +45,7 @@ class _RegisterViewState extends State<RegisterView> {
     super.initState();
   }
 
-    _bind() {
+  _bind() {
     _viewModel.start();
     _userNameTextEditingController.addListener(() {
       _viewModel.setUserName(_userNameTextEditingController.text);
@@ -120,8 +120,8 @@ class _RegisterViewState extends State<RegisterView> {
                       keyboardType: TextInputType.text,
                       controller: _userNameTextEditingController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.username,
-                          labelText: AppStrings.username,
+                          hintText: AppStrings.username.tr(),
+                          labelText: AppStrings.username.tr(),
                           errorText: (snapshot.data)),
                     );
                   },
@@ -170,10 +170,19 @@ class _RegisterViewState extends State<RegisterView> {
                                             : null,
                                       ),
                                       _sizeBox(),
-                                      Text(
-                                        countryCodeSelected?.dialCode ?? "+1",
-                                        style:
-                                            TextStyle(color: ColorManager.grey),
+                                      Container(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: AppSize.s8,
+                                            vertical: AppSize.s4),
+                                        decoration: BoxDecoration(
+                                            color: ColorManager.primary,
+                                            borderRadius: BorderRadius.circular(
+                                                AppSize.s6)),
+                                        child: Text(
+                                          countryCodeSelected?.dialCode ?? "+1",
+                                          style: TextStyle(
+                                              color: ColorManager.grey),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -197,8 +206,8 @@ class _RegisterViewState extends State<RegisterView> {
                       keyboardType: TextInputType.emailAddress,
                       controller: _emailEditingController,
                       decoration: InputDecoration(
-                          hintText: AppStrings.emailHint,
-                          labelText: AppStrings.emailHint,
+                          hintText: AppStrings.emailHint.tr(),
+                          labelText: AppStrings.emailHint.tr(),
                           errorText: (snapshot.data)),
                     );
                   },
@@ -216,8 +225,8 @@ class _RegisterViewState extends State<RegisterView> {
                       keyboardType: TextInputType.visiblePassword,
                       controller: _PasswordTextEditingController,
                       decoration: InputDecoration(
-                        hintText: AppStrings.password,
-                        labelText: AppStrings.password,
+                        hintText: AppStrings.password.tr(),
+                        labelText: AppStrings.password.tr(),
                         errorText: (snapshot.data),
                       ),
                     );
@@ -264,7 +273,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   _viewModel.register();
                                 }
                               : null,
-                          child: Text(AppStrings.register.tr())),
+                          child: Text(AppStrings.register).tr()),
                     );
                   },
                 ),
@@ -281,10 +290,10 @@ class _RegisterViewState extends State<RegisterView> {
                     Navigator.of(context).pop();
                   },
                   child: Text(
-                    AppStrings.haveAccount.tr(),
+                    AppStrings.haveAccount,
                     textAlign: TextAlign.end,
                     style: Theme.of(context).textTheme.titleSmall,
-                  ),
+                  ).tr(),
                 ),
               ),
             ],
@@ -324,7 +333,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ListTile(
                   trailing: Icon(Icons.arrow_forward),
                   leading: Icon(Icons.camera),
-                  title: Text(AppStrings.photoGalley.tr()),
+                  title: Text(AppStrings.photoGalley).tr(),
                   onTap: () {
                     _imageFromGallery();
                     Navigator.of(context).pop();
@@ -333,7 +342,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ListTile(
                   trailing: Icon(Icons.arrow_forward),
                   leading: Icon(Icons.camera_alt_rounded),
-                  title: Text(AppStrings.photoCamera.tr()),
+                  title: Text(AppStrings.photoCamera).tr(),
                   onTap: () {
                     _imageFromCamera();
                     Navigator.of(context).pop();
@@ -361,7 +370,7 @@ class _RegisterViewState extends State<RegisterView> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Flexible(child: Text(AppStrings.profilePicture.tr())),
+          Flexible(child: Text(AppStrings.profilePicture).tr()),
           Flexible(
             child: StreamBuilder<File?>(
               stream: _viewModel.outputProfilePicture,
