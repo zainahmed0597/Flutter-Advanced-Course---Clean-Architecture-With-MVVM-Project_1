@@ -1,10 +1,11 @@
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:fl_country_code_picker/fl_country_code_picker.dart';
+// import 'package:fl_country_code_picker/fl_country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl_phone_number_input/intl_phone_number_input.dart';
 import 'package:project_1/app/di.dart';
 import 'package:project_1/presentation/register/register_viewmodel.dart';
 import '../../app/app_prefs.dart';
@@ -36,8 +37,8 @@ class _RegisterViewState extends State<RegisterView> {
   TextEditingController _PasswordTextEditingController =
       TextEditingController();
 
-  final countryPicker = const FlCountryCodePicker();
-  CountryCode? countryCodeSelected;
+  String initialCountry = '';
+  PhoneNumber number = PhoneNumber(isoCode: 'PK', dialCode: '+', phoneNumber: '');
 
   @override
   void initState() {
@@ -128,6 +129,7 @@ class _RegisterViewState extends State<RegisterView> {
                 ),
               ),
               SizedBox(height: AppSize.s12),
+
               // CountryCode and Mobile Number
               Padding(
                 padding: EdgeInsets.only(
@@ -135,65 +137,21 @@ class _RegisterViewState extends State<RegisterView> {
                 child: StreamBuilder<String?>(
                     stream: _viewModel.outputErrorMobileNumber,
                     builder: (context, snapshot) {
-                      return TextFormField(
-                        controller: _mobileNumberTextEditingController,
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        maxLines: 1,
-                        decoration: InputDecoration(
-                          hintText: AppStrings.mobileNumber.tr(),
-                          labelText: AppStrings.mobileNumber.tr(),
-                          errorText: (snapshot.data),
-                          prefixIcon: Container(
-                            padding: const EdgeInsets.all(AppSize.s6),
-                            margin: const EdgeInsets.symmetric(horizontal: 8),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    final code = await countryPicker.showPicker(
-                                        context: context);
-                                    setState(() {
-                                      countryCodeSelected = code;
-                                      // update view model with selected code
-                                      _viewModel.setCountryCode(
-                                          countryCodeSelected!.dialCode
-                                              .toString());
-                                    });
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Container(
-                                        child: countryCodeSelected != null
-                                            ? countryCodeSelected!.flagImage()
-                                            : null,
-                                      ),
-                                      _sizeBox(),
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: AppSize.s8,
-                                            vertical: AppSize.s4),
-                                        decoration: BoxDecoration(
-                                            color: ColorManager.primary,
-                                            borderRadius: BorderRadius.circular(
-                                                AppSize.s6)),
-                                        child: Text(
-                                          countryCodeSelected?.dialCode ?? "+1",
-                                          style: TextStyle(
-                                              color: ColorManager.grey),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      );
+                      return InternationalPhoneNumberInput(
+                        hintText: AppStrings.mobileNumber.tr(),
+                        errorMessage: (snapshot.data),
+                        textFieldController: _mobileNumberTextEditingController,
+                        initialValue: number,
+                        onInputChanged: (PhoneNumber number) {
+                          _viewModel.setCountryCode(number.dialCode.toString());
+                          },
+                        selectorConfig: const SelectorConfig(
+                        selectorType:
+                            PhoneInputSelectorType.BOTTOM_SHEET),
+                        );
                     }),
               ),
+
               SizedBox(height: AppSize.s12),
               // Email TextEditField
               Padding(
@@ -308,18 +266,6 @@ class _RegisterViewState extends State<RegisterView> {
       return Image.file(image);
     } else {
       return Container();
-    }
-  }
-
-  Widget _sizeBox() {
-    if (countryCodeSelected != null) {
-      return const SizedBox(
-        width: AppSize.s14,
-      );
-    } else {
-      return const SizedBox(
-        width: AppSize.s0,
-      );
     }
   }
 

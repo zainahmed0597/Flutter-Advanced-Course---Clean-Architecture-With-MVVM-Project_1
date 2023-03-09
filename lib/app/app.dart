@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:project_1/app/app_prefs.dart';
 import 'package:project_1/presentation/resources/routes_manager.dart';
 import '../presentation/resources/theme_manager.dart';
-import 'package:fl_country_code_picker/fl_country_code_picker.dart' as flc;
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'di.dart';
 
@@ -36,24 +34,8 @@ class _MyAppState extends State<MyApp> {
       onGenerateRoute: RouteGenerator.getRoute,
       initialRoute: Routes.splashRoute,
       theme: getApplicationTheme(),
-      supportedLocales: flc.supportedLocales.map((e) => Locale(e)),
-      localizationsDelegates: [
-        flc.CountryLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate
-      ],
+      supportedLocales: context.supportedLocales,
+      localizationsDelegates: context.localizationDelegates,
     );
   }
-//    1:  easy_localization plugin
-//      localizationsDelegates: context.localizationDelegates,
-//      supportedLocales: context.supportedLocales,
-//      2:  fl_country_code_picker plugin
-//      supportedLocales: flc.supportedLocales.map((e) => Locale(e)),
-//      localizationsDelegates: const [
-//       flc.CountryLocalizations.delegate,
-//       GlobalWidgetsLocalizations.delegate,
-//       GlobalMaterialLocalizations.delegate,
-//       GlobalCupertinoLocalizations.delegate,
-//     ],
 }
