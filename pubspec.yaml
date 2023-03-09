@@ -34,11 +34,9 @@ dependencies:
   cupertino_icons: ^1.0.2
   flutter_svg: ^2.0.0+1
   analyzer: ^5.4.0
-  #Old code
   dio: ^4.0.0
   retrofit: ^3.3.1
   retrofit_generator: ^4.2.0
-
   dartz: ^0.10.1
   data_connection_checker: ^0.3.4
   pretty_dio_logger: ^1.2.0-beta-1
@@ -47,15 +45,12 @@ dependencies:
   freezed: ^2.3.2
   get_it: ^7.2.0
   lottie: ^2.2.0
-#  country_code_picker: ^2.0.2 OLD plugin Discontinued
-  fl_country_code_picker: ^0.1.2 # NEW plugin
+  fl_country_code_picker: ^0.1.2
   image_picker: ^0.8.4+4
   rxdart: ^0.27.7
   carousel_slider: ^4.2.1
   easy_localization: ^3.0.1
   flutter_phoenix: ^1.1.0
-
-
 
 dev_dependencies:
   flutter_test:
@@ -85,7 +80,8 @@ flutter:
   assets:
     - assets/images/
     - assets/json/
-    - assets/translations/
+    - assets/translations/ar-SA.json
+    - assets/translations/en-US.json
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

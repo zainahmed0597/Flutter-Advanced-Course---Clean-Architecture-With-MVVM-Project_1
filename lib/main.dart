@@ -12,6 +12,8 @@ void main() async {
   await initAppModule();
   runApp(EasyLocalization(
     supportedLocales: [ENGLISH_LOCAL, ARABIC_LOCAL],
+    // saveLocale: true,
+    // fallbackLocale: ENGLISH_LOCAL,
     path: ASSETS_PATH_LOCALISATIONS,
     child: Phoenix(child: MyApp()),
   ));

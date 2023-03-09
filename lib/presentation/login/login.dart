@@ -79,6 +79,8 @@ class _LoginViewState extends State<LoginView> {
               children: [
                 Image(image: AssetImage(ImageAssets.splashLogo)),
                 SizedBox(height: AppSize.s28),
+
+
                 Padding(
                   padding: EdgeInsets.only(
                       left: AppPadding.p28, right: AppPadding.p28),
@@ -90,7 +92,7 @@ class _LoginViewState extends State<LoginView> {
                         controller: _userNameController,
                         decoration: InputDecoration(
                             hintText: AppStrings.username.tr(),
-                            labelText: AppStrings.username.tr(),
+                            labelText: AppStrings.username.tr().toString(),
                             errorText: (snapshot.data ?? true)
                                 ? null
                                 : AppStrings.usernameError.tr()),
@@ -98,6 +100,8 @@ class _LoginViewState extends State<LoginView> {
                     },
                   ),
                 ),
+
+
                 SizedBox(height: AppSize.s28),
                 Padding(
                   padding: EdgeInsets.only(
