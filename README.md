@@ -1,16 +1,37 @@
 # Flutter-Advanced-Course_Clean-Architecture-With-MVVM
 
-A new Flutter project.
-
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Using this dependencies to make this learn project
+cupertino_icons:
+flutter_svg:
+analyzer:
+dio:
+retrofit:
+retrofit_generator:
+dartz:
+data_connection_checker:
+pretty_dio_logger:
+shared_preferences:
+device_info_plus:
+freezed:
+get_it:
+lottie:
+fl_country_code_picker:
+image_picker:
+rxdart:
+carousel_slider:
+easy_localization:
+flutter_phoenix:
+json_serializable:
+build_runner:
 
-A few resources to get you started if this is your first Flutter project:
+To run project:  flutter run --no-sound-null-safety
+Login ID: abc
+Password: 123456
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Flutter Advanced Course - Clean Architecture With MVVM: View here](https://www.udemy.com/course/flutter-advanced-course-clean-architecture-with-mvvm/)
+- [Udemy certificate: View here](https://www.udemy.com/certificate/UC-5fa7067f-33f0-4898-9c16-5740395cf75d/)
+- 
+- ![alt text](assets/Others/Certificate.png)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
