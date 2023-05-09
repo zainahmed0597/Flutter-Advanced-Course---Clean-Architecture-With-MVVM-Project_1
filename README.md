@@ -32,5 +32,5 @@ Password: 123456
 
 - [Flutter Advanced Course - Clean Architecture With MVVM: View here](https://www.udemy.com/course/flutter-advanced-course-clean-architecture-with-mvvm/)
 - [Udemy certificate: View here](https://www.udemy.com/certificate/UC-5fa7067f-33f0-4898-9c16-5740395cf75d/)
-  ![alt text](assets/Others/Flutter MVVM Course Certificate.pdf)
+  ![alt text](assets/Others/Screenshot 2023-05-09 at 11.30.15 AM.png)
 
